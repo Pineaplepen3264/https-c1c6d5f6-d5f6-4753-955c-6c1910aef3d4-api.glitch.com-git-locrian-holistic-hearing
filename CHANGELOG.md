@@ -1,35 +1,8 @@
 # Breaking Changes
 
-## June 22nd, 2019
-
-If you've created a private server with this template before April 10th, 2019, it will not support the new protocol which is now standardized!
-
-Open the lib/fasttalk.js in your server. Copy the code from the lib/fasttalk.js in this project onto your project. This will let your server use the new encoding, which will save bandwidth.
-
-## May 25th, 2019
-
-If you've created a private server with this template before May 25th, 2019, the minimap and leaderboard will no longer work without this update!
-
-Replace the entire `broadcast` function in your server.js, which you can find by searching `const broadcast = (() => {`. Replace it with the one in the template.
-
-Find `needsFullLeaderboard: true` in your server.js and replace it with `needsNewBroadcast: true`
-
-Find `let broadcastingGuiStuff = setInterval(() => broadcast(socket), 250)` and replace it with `broadcast.subscribe(socket)`
-
-Find `clearTimeout(broadcastingGuiStuff)` and replace it with `broadcast.unsubscribe(socket)`
-
-You may also remove this block of code in server.js
-```
-case 'z': { // leaderboard desync report
-    if (m.length !== 0) { socket.kick('Ill-sized level-up request.'); return 1; }
-    // Flag it to get a refresh on the next cycle
-    socket.status.needsFullLeaderboard = true
-} break
-```
-
 ## April 10th, 2019
 
-If you've created a private server with this template before April 10th, 2019, it will not support the new protocol which will be standardized in the future!
+If you've created a private server with this template before April 10th, 2019, it will not support the new protocol which will be standardized in May, 2019!
 
 Open the lib/fasttalk.js in your server. Copy the code from the lib/fasttalk.js in this project onto your project. This will let your server use the new encoding, which will save bandwidth.
 
