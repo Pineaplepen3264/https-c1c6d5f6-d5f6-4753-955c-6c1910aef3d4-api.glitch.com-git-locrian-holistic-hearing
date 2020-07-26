@@ -3166,10 +3166,12 @@ var http = require("http"),
         let xy3 = x3 * x3 + y3 * y3;
         let x =
           // Numerator
-          (xy1 * (y2 - y3) + xy2 * (y3 - y1) + xy3 * (y1 - y2)) / (2 * denom);
+          (xy1 * (y2 - y3) + xy2 * (y3 - y1) + xy3 * (y1 - y2)) /
+          (2 * denom);
         let y =
           // Numerator
-          (xy1 * (x3 - x2) + xy2 * (x1 - x3) + xy3 * (x2 - x1)) / (2 * denom);
+          (xy1 * (x3 - x2) + xy2 * (x1 - x3) + xy3 * (x2 - x1)) /
+          (2 * denom);
         let r = Math.sqrt(Math.pow(x - x1, 2) + Math.pow(y - y1, 2));
         let r2 = Math.sqrt(Math.pow(x - x2, 2) + Math.pow(y - y2, 2));
         let r3 = Math.sqrt(Math.pow(x - x3, 2) + Math.pow(y - y3, 2));
@@ -4139,7 +4141,7 @@ const sockets = (() => {
           socket.status.hasSpawned = true;
           body.sendMessage("You have spawned! Welcome to the game.");
           body.sendMessage("You will be invulnerable until you move or shoot.");
-          body.sendMessage("Join our Discord at https://discord.gg/MJjGpze ");
+          body.sendMessage("Join our ")
           // Move the client camera
           socket.talk("c", socket.camera.x, socket.camera.y, socket.camera.fov);
           return player;
@@ -5530,7 +5532,7 @@ var maintainloop = (() => {
     util.log("Placing " + count + " obstacles!");
   }
   placeRoids();
-  //Spawning functions
+  // Spawning functions
   let spawnBosses = (() => {
     let timer = 0;
     let boss = (() => {
@@ -5567,10 +5569,10 @@ var maintainloop = (() => {
           names = ran.chooseBossName(nameClass, number);
           i = 0;
           if (n === 1) {
-            begin = "A boss is coming.";
+            begin = "A visitor is coming.";
             arrival = names[0] + " has arrived.";
           } else {
-            begin = "Bosses are coming.";
+            begin = "Visitors are coming.";
             arrival = "";
             for (let i = 0; i < n - 2; i++) arrival += names[i] + ", ";
             arrival += names[n - 2] + " and " + names[n - 1] + " have arrived.";
@@ -5661,28 +5663,27 @@ var maintainloop = (() => {
       // Spawning
       spawnCrasher(census);
       spawnBosses(census);
-      bots;
-      if (bots.length < c.BOTS) {
-        let o = new Entity(room.random());
-        o.color = 17;
-        o.define(Class.bot);
-        o.define(Class.random);
-        o.name += ran.chooseBotName();
-        o.refreshBodyAttributes();
-        o.color = 17;
-        bots.push(o);
-      }
-      // Remove dead ones
-      bots = bots.filter(e => {
-        return !e.isDead();
-      });
-      // Slowly upgrade them
-      bots.forEach(o => {
-        if (o.skill.level < 45) {
-          o.skill.score += 35;
-          o.skill.maintain();
-        }
-      });
+      /*/ Bots
+                if (bots.length < c.BOTS) {
+                    let o = new Entity(room.random());
+                    o.color = 17;
+                    o.define(Class.bot);
+                    o.define(Class.basic);
+                    o.name += ran.chooseBotName();
+                    o.refreshBodyAttributes();
+                    o.color = 17;
+                    bots.push(o);
+                }
+                // Remove dead ones
+                bots = bots.filter(e => { return !e.isDead(); });
+                // Slowly upgrade them
+                bots.forEach(o => {
+                    if (o.skill.level < 45) {
+                        o.skill.score += 35;
+                        o.skill.maintain();
+                    }
+                });
+            */
     };
   })();
   // The big food function
@@ -5836,7 +5837,7 @@ var maintainloop = (() => {
       placeNewFood(spot, 0.05 * room.width, 0);
     };
     let makeNestFood = () => {
-      //Make nest pentagons
+      // Make nest pentagons
       let spot = room.randomType("nest");
       placeNewFood(spot, 0.01 * room.width, 3, true);
     };
@@ -5844,7 +5845,7 @@ var maintainloop = (() => {
     return () => {
       // Find and understand all food
       let census = {
-        [0]: 0, //Egg
+        [0]: 0, // Egg
         [1]: 0, // Square
         [2]: 0, // Triangle
         [3]: 0, // Penta
