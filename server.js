@@ -3166,12 +3166,10 @@ var http = require("http"),
         let xy3 = x3 * x3 + y3 * y3;
         let x =
           // Numerator
-          (xy1 * (y2 - y3) + xy2 * (y3 - y1) + xy3 * (y1 - y2)) /
-          (2 * denom);
+          (xy1 * (y2 - y3) + xy2 * (y3 - y1) + xy3 * (y1 - y2)) / (2 * denom);
         let y =
           // Numerator
-          (xy1 * (x3 - x2) + xy2 * (x1 - x3) + xy3 * (x2 - x1)) /
-          (2 * denom);
+          (xy1 * (x3 - x2) + xy2 * (x1 - x3) + xy3 * (x2 - x1)) / (2 * denom);
         let r = Math.sqrt(Math.pow(x - x1, 2) + Math.pow(y - y1, 2));
         let r2 = Math.sqrt(Math.pow(x - x2, 2) + Math.pow(y - y2, 2));
         let r3 = Math.sqrt(Math.pow(x - x3, 2) + Math.pow(y - y3, 2));
@@ -4141,7 +4139,7 @@ const sockets = (() => {
           socket.status.hasSpawned = true;
           body.sendMessage("You have spawned! Welcome to the game.");
           body.sendMessage("You will be invulnerable until you move or shoot.");
-          body.sendMessage("Join our ")
+          body.sendMessage("Join our Discord at https://discord.gg/MJjGpze");
           // Move the client camera
           socket.talk("c", socket.camera.x, socket.camera.y, socket.camera.fov);
           return player;
@@ -5569,10 +5567,10 @@ var maintainloop = (() => {
           names = ran.chooseBossName(nameClass, number);
           i = 0;
           if (n === 1) {
-            begin = "A visitor is coming.";
+            begin = "A boss is coming.";
             arrival = names[0] + " has arrived.";
           } else {
-            begin = "Visitors are coming.";
+            begin = "Bosses are coming.";
             arrival = "";
             for (let i = 0; i < n - 2; i++) arrival += names[i] + ", ";
             arrival += names[n - 2] + " and " + names[n - 1] + " have arrived.";
@@ -5663,7 +5661,7 @@ var maintainloop = (() => {
       // Spawning
       spawnCrasher(census);
       spawnBosses(census);
-      /*/ Bots
+      Bots
                 if (bots.length < c.BOTS) {
                     let o = new Entity(room.random());
                     o.color = 17;
@@ -5683,7 +5681,7 @@ var maintainloop = (() => {
                         o.skill.maintain();
                     }
                 });
-            */
+            
     };
   })();
   // The big food function
