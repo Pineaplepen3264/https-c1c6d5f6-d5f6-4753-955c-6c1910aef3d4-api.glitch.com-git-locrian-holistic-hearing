@@ -4139,7 +4139,7 @@ const sockets = (() => {
           socket.status.hasSpawned = true;
           body.sendMessage("You have spawned! Welcome to the game.");
           body.sendMessage("You will be invulnerable until you move or shoot.");
-          body.sendMessage("Join our Discord at https ");
+          body.sendMessage("Join our Discord at https://discord.gg/MJjGpze ");
           // Move the client camera
           socket.talk("c", socket.camera.x, socket.camera.y, socket.camera.fov);
           return player;
@@ -5530,7 +5530,7 @@ var maintainloop = (() => {
     util.log("Placing " + count + " obstacles!");
   }
   placeRoids();
-  // Spawning functions
+  //Spawning functions
   let spawnBosses = (() => {
     let timer = 0;
     let boss = (() => {
@@ -5567,10 +5567,10 @@ var maintainloop = (() => {
           names = ran.chooseBossName(nameClass, number);
           i = 0;
           if (n === 1) {
-            begin = "A visitor is coming.";
+            begin = "A boss is coming.";
             arrival = names[0] + " has arrived.";
           } else {
-            begin = "Visitors are coming.";
+            begin = "Bosses are coming.";
             arrival = "";
             for (let i = 0; i < n - 2; i++) arrival += names[i] + ", ";
             arrival += names[n - 2] + " and " + names[n - 1] + " have arrived.";
@@ -5836,7 +5836,7 @@ var maintainloop = (() => {
       placeNewFood(spot, 0.05 * room.width, 0);
     };
     let makeNestFood = () => {
-       //Make nest pentagons
+      //Make nest pentagons
       let spot = room.randomType("nest");
       placeNewFood(spot, 0.01 * room.width, 3, true);
     };
@@ -5844,7 +5844,7 @@ var maintainloop = (() => {
     return () => {
       // Find and understand all food
       let census = {
-        [0]: 0,  //Egg
+        [0]: 0, //Egg
         [1]: 0, // Square
         [2]: 0, // Triangle
         [3]: 0, // Penta
