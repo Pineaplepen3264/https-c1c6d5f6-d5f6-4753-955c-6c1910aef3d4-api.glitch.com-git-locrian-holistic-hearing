@@ -5658,10 +5658,10 @@ var maintainloop = (() => {
         .filter(e => {
           return e;
         });
-      // Spawning
+       //Spawning
       spawnCrasher(census);
       spawnBosses(census);
-      /*/ Bots
+       /*/Bots
                 if (bots.length < c.BOTS) {
                     let o = new Entity(room.random());
                     o.color = 17;
@@ -5681,7 +5681,7 @@ var maintainloop = (() => {
                         o.skill.maintain();
                     }
                 });
-            */
+            
     };
   })();
   // The big food function
@@ -5954,7 +5954,7 @@ var maintainloop = (() => {
                   cens[o.foodLevel + 1] / amount / proportions[o.foodLevel + 1]
               )
             ) {
-              o.define(getFoodClass(o.foodLevel + 1));
+            
             }
           }
         }
@@ -5965,7 +5965,7 @@ var maintainloop = (() => {
   return () => {
     // Do stuff
     makenpcs();
-    makefood();
+    //makefood();
     // Regen health and update the grid
     entities.forEach(instance => {
       if (instance.shield.max) {
