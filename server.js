@@ -5567,10 +5567,10 @@ var maintainloop = (() => {
           names = ran.chooseBossName(nameClass, number);
           i = 0;
           if (n === 1) {
-            begin = "A visitor is coming.";
+            begin = "A boss is coming.";
             arrival = names[0] + " has arrived.";
           } else {
-            begin = "Visitors are coming.";
+            begin = "Bosses are coming.";
             arrival = "";
             for (let i = 0; i < n - 2; i++) arrival += names[i] + ", ";
             arrival += names[n - 2] + " and " + names[n - 1] + " have arrived.";
