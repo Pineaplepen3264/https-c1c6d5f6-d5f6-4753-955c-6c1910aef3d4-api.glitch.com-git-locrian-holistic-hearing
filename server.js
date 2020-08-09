@@ -4391,7 +4391,8 @@ const sockets = (() => {
       const broadcast = (() => {
         // This is the public information we need for broadcasting
         let readlb;
-        // Define fundamental functions
+        //
+        //Define fundamental functions
         /*const getminimap = (() => {
                   let all = {
                     walls: [],
