@@ -1149,7 +1149,8 @@ class Skill {
         if (
           this.level == c.TIER_1 ||
           this.level == c.TIER_2 ||
-          this.level == c.TIER_3
+          this.level == c.TIER_3 ||
+          this.level == c.TIER_4
         ) {
           this.canUpgrade = true;
         }
