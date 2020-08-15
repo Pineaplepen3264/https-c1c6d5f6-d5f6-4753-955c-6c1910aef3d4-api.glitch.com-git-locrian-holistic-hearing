@@ -5602,8 +5602,7 @@ var maintainloop = (() => {
         switch (ran.chooseChance(40, 1)) {
           case 0:
             choice = [
-              [Class.elite_destroyer, Class.gunnerDominator],
-              2,
+              [Class.elite_destroyer, Class.gunnerDominator, Class.fallenoverworker, Class.palisade],
               "a",
               "nest"
             ];
