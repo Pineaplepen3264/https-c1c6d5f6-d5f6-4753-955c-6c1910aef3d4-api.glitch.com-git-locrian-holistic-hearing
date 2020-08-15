@@ -5602,20 +5602,14 @@ var maintainloop = (() => {
         switch (ran.chooseChance(40, 1)) {
           case 0:
             choice = [
-              [
-                Class.elite_destroyer,
-                Class.gunnerDominator,
-                Class.fallenoverworker,
-                Class.palisade,
-                Class.skimboss
-              ],
+              [Class.elite_destroyer, Class.gunnerDominator, Class.fallenoverworker, Class.palisade],
               "a",
               "nest"
             ];
             break;
           case 1:
             choice = [[Class.palisade], 1, "castle", "norm"];
-            sockets.broadcast("A strange rumbling...");
+            sockets.broadcast("A strange trembling...");
             break;
         }
         boss.prepareToSpawn(...choice);
