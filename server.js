@@ -5606,8 +5606,7 @@ var maintainloop = (() => {
                 Class.elite_destroyer,
                 Class.gunnerDominator,
                 Class.fallenoverworker,
-                Class.palisade,
-                Class.skimboss
+                Class.palisade
               ],
               "a",
               "nest"
