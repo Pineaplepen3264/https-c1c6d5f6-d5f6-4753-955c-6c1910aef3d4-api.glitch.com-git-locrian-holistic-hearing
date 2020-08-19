@@ -1149,7 +1149,8 @@ class Skill {
         if (
           this.level == c.TIER_1 ||
           this.level == c.TIER_2 ||
-          this.level == c.TIER_3
+          this.level == c.TIER_3 ||
+          this.level == c.TIER_4
         ) {
           this.canUpgrade = true;
         }
@@ -2165,6 +2166,11 @@ class Entity {
         this.upgrades.push({ class: e, level: c.TIER_3, index: e.index });
       });
     }
+    if (set.UPGRADES_TIER_4 != null) {
+      set.UPGRADES_TIER_4.forEach(e => {
+        this.upgrades.push({ class: e, level: c.TIER_4, index: e.index });
+      });
+    }
     if (set.SIZE != null) {
       this.SIZE = set.SIZE * this.squiggle;
       if (this.coreSize == null) {
@@ -2830,7 +2836,7 @@ class Entity {
       });
       // Prepare it and clear the collision array.
       killText = killText.slice(0, -5);
-      if (killText === "You have been kille")
+      if (killText === "You have been killed")
         killText = "You have died a stupid death";
       this.sendMessage(killText + ".");
       // If I'm the leader, broadcast it:
@@ -5597,14 +5603,13 @@ var maintainloop = (() => {
           case 0:
             choice = [
               [Class.elite_destroyer, Class.gunnerDominator],
-              2,
               "a",
               "nest"
             ];
             break;
           case 1:
             choice = [[Class.palisade], 1, "castle", "norm"];
-            sockets.broadcast("A strange trembling...");
+            sockets.broadcast("A strange rumbling...");
             break;
         }
         boss.prepareToSpawn(...choice);
