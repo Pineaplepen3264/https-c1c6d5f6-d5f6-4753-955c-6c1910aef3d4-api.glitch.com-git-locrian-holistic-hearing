@@ -6068,7 +6068,7 @@ let server = http.createServer((req, res) => {
     case "/":
       res.writeHead(200);
       res.end(
-        `<!DOCTYPE html><h3>Arras</h3><button onclick="location.href = 'http://arras.io/#host=' + location.host">Open</button>`
+        `<!DOCTYPE html><h3>Arras</h3><button onclick="location.href = 'https://arras.io/#host=' + location.host">Open</button>`
       );
       break;
     case "/mockups.json":
