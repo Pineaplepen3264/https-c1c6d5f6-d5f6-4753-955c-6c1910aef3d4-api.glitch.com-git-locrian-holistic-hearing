@@ -2488,15 +2488,23 @@ class Entity {
         y: 0
       },
       a = this.acceleration / roomSpeed;
-    switch (this.motionType) {
-      case "glide":
-        this.maxSpeed = this.topSpeed;
-        this.damp = 0.05;
-        break;
-      case "motor":
-        this.maxSpeed = 0;
-        if (this.topSpeed) {
-          this.damp = a / this.topSpeed;
+           switch (this.motionType) {
+        case 'glide':
+            this.maxSpeed = this.topSpeed;
+            this.damp = 0.05;
+            break;
+        case "accel":
+            this.maxSpeed = this.topSpeed;
+            this.damp = -0.05;
+            break;
+        case "grow":
+            this.SIZE += 1;
+            this.maxSpeed = this.topSpeed;
+            break;
+        case 'motor':
+            this.maxSpeed = 0;            
+            if (this.topSpeed) {
+                this.damp = a / this.topSpeed;
         }
         if (gactive) {
           let len = Math.sqrt(g.x * g.x + g.y * g.y);

@@ -1,1 +1,1 @@
-KA2: I added a New Tank, so What should it upgrade from
+KA2: I added a New Tank, so What should it upgrade from?
