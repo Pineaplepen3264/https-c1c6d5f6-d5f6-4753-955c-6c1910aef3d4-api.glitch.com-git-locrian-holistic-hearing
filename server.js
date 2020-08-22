@@ -5613,7 +5613,8 @@ var maintainloop = (() => {
               [
                 Class.elite_destroyer,
                 Class.gunnerDominator,
-                Class.fallenoverworker
+                Class.fallenoverworker,
+                Class.DestroyerDominator
                 
               ],
               3,
