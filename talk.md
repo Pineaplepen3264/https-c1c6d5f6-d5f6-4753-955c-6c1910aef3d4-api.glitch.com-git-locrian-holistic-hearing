@@ -6,3 +6,6 @@ KA2: I think the Gunner Dominator needs to be nerfed down. If I have permission,
 
 KA2: Added the Elite Battleship and the Nestkeeper.
 
+David: Nice
+
+David: I will fix the dominator shapes now.
