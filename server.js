@@ -5624,7 +5624,7 @@ var maintainloop = (() => {
             break;
           case 1:
             choice = [[Class.palisade], 1, "castle", "norm"];
-            sockets.broadcast("A strange rumbling...");
+            sockets.broadcast("A weird rumbling...");
             break;
         }
         boss.prepareToSpawn(...choice);
