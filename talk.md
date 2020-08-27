@@ -11,3 +11,6 @@ David: Nice
 David: I will fix the dominator shapes now.
 
 Mega: Yo! İm mega arras
+
+Mega: i we add motherships!
+
