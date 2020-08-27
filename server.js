@@ -5625,6 +5625,10 @@ var maintainloop = (() => {
             choice = [[Class.palisade], 1, "castle", "norm"];
             sockets.broadcast("A weird rumbling...");
             break;
+case 2:
+            choice = [[Class.gunnerDominator,Class.DestroyerDominator], 100, "castle", "norm"];
+            sockets.broadcast("oh s*it... DOMS ARE RAİDİNG SERVER!");
+            break;
         }
         boss.prepareToSpawn(...choice);
         setTimeout(boss.spawn, 3000);
