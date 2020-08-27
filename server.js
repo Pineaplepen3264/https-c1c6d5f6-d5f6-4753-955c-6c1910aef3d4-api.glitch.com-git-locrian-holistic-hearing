@@ -5615,7 +5615,6 @@ var maintainloop = (() => {
                 Class.gunnerDominator,
                 Class.fallenoverworker,
                 Class.DestroyerDominator
-                
               ],
               3,
               "a",
@@ -5687,25 +5686,27 @@ var maintainloop = (() => {
       // Spawning
       spawnCrasher(census);
       spawnBosses(census);
-                if (bots.length < c.BOTS) {
-                    let o = new Entity(room.random());
-                    o.color = 17;
-                    o.define(Class.bot);
-                    o.define(Class.basic);
-                    o.name += ran.chooseBotName();
-                    o.refreshBodyAttributes();
-                    o.color = 17;
-                    bots.push(o);
-                }
-                // Remove dead ones
-                bots = bots.filter(e => { return !e.isDead(); });
-                // Slowly upgrade them
-                bots.forEach(o => {
-                    if (o.skill.level < 45) {
-                        o.skill.score += 35;
-                        o.skill.maintain();
-                    }
-                });
+      if (bots.length < c.BOTS) {
+        let o = new Entity(room.random());
+        o.color = 17;
+        o.define(Class.bot);
+        o.define(Class.basic);
+        o.name += ran.chooseBotName();
+        o.refreshBodyAttributes();
+        o.color = 17;
+        bots.push(o);
+      }
+      // Remove dead ones
+      bots = bots.filter(e => {
+        return !e.isDead();
+      });
+      // Slowly upgrade them
+      bots.forEach(o => {
+        if (o.skill.level < 45) {
+          o.skill.score += 35;
+          o.skill.maintain();
+        }
+      });
     };
   })();
   // The big food function
