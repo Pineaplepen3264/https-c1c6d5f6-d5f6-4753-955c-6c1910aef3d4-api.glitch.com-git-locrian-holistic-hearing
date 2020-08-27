@@ -9,3 +9,5 @@ KA2: Added the Elite Battleship and the Nestkeeper.
 David: Nice
 
 David: I will fix the dominator shapes now.
+
+Mega: Yo! İm mega arras
