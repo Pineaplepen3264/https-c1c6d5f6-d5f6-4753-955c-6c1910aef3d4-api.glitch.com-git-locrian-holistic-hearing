@@ -5660,15 +5660,15 @@ case 2:
   // The NPC function
   let makenpcs = (() => {
     // Make base protectors if needed.
-    /*let f = (loc, team) => { 
+    let f = (loc, team) => { 
                 let o = new Entity(loc);
-                    o.define(Class.baseProtector);
+                    o.define(/*Class.baseProtector*/Class.DestroyerDominator);
                     o.team = -team;
                     o.color = [10, 11, 12, 15][team-1];
             };
             for (let i=1; i<5; i++) {
                 room['bas' + i].forEach((loc) => { f(loc, i); }); 
-            }*/
+            }
     // Return the spawning function
     let bots = [];
     return () => {
