@@ -12,4 +12,5 @@
   "engines": {
     "node": "10.x"
   },
-  "license": "GPL
+  "license": "GPL"
+}
