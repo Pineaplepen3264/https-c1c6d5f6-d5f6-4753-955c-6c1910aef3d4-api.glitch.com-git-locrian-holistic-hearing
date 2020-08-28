@@ -5662,7 +5662,7 @@ case 2:
     // Make base protectors if needed.
     let f = (loc, team) => { 
                 let o = new Entity(loc);
-                    o.define(/*Class.baseProtector*/Class.DestroyerDominator);
+                    o.define(Class.baseGProtector/*Class.DestroyerDominator*/);
                     o.team = -team;
                     o.color = [10, 11, 12, 15][team-1];
             };
