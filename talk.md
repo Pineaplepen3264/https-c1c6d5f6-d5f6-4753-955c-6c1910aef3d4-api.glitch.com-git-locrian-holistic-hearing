@@ -14,3 +14,6 @@ Mega: Yo! İm mega arras
 
 Mega: i we add motherships!
 
+KA2: Added the Nailgunner Trapper.
+
+
