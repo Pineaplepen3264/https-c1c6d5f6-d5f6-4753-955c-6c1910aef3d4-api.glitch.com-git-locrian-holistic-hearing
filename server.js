@@ -5662,7 +5662,7 @@ case 2:
     // Make base protectors if needed.
     let f = (loc, team) => { 
                 let o = new Entity(loc);
-                    o.define(Class.baseGunProtector/*Class.DestroyerDominator*/);
+                    o.define(Class.basic/*Class.DestroyerDominator*/);
                     o.team = -team;
                     o.color = [10, 11, 12, 15][team-1];
             };
@@ -5692,12 +5692,12 @@ case 2:
       spawnBosses(census);
       if (bots.length < c.BOTS) {
         let o = new Entity(room.random());
-        o.color = 17;
+     //   o.color = 17;
         o.define(Class.bot);
-        o.define(Class.basic);
+        o.define(Class.elite_destroyer);
         o.name += ran.chooseBotName();
         o.refreshBodyAttributes();
-        o.color = 17;
+        o.color = 20;
         bots.push(o);
       }
       // Remove dead ones
