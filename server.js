@@ -5625,8 +5625,13 @@ var maintainloop = (() => {
             choice = [[Class.palisade], 1, "castle", "norm"];
             sockets.broadcast("A weird rumbling...");
             break;
-case 2:
-            choice = [[Class.gunnerDominator,Class.DestroyerDominator], 100, "castle", "norm"];
+          case 2:
+            choice = [
+              [Class.gunnerDominator, Class.DestroyerDominator],
+              100,
+              "castle",
+              "norm"
+            ];
             sockets.broadcast("oh s*it... DOMS ARE RAİDİNG SERVER!");
             break;
         }
@@ -5660,15 +5665,17 @@ case 2:
   // The NPC function
   let makenpcs = (() => {
     // Make base protectors if needed.
-    let f = (loc, team) => { 
-                let o = new Entity(loc);
-                    o.define(Class.ranger/*Class.DestroyerDominator*/);
-                    o.team = -team;
-                    o.color = [10, 11, 12, 15][team-1];
-            };
-            for (let i=1; i<5; i++) {
-                room['bas' + i].forEach((loc) => { f(loc, i); }); 
-            }
+    let f = (loc, team) => {
+      let o = new Entity(loc);
+      o.define(Class.DestroyerDominator);
+      o.team = -team;
+      o.color = [10, 11, 12, 15][team - 1];
+    };
+    for (let i = 1; i < 5; i++) {
+      room["bas" + i].forEach(loc => {
+        f(loc, i);
+      });
+    }
     // Return the spawning function
     let bots = [];
     return () => {
@@ -5692,7 +5699,7 @@ case 2:
       spawnBosses(census);
       if (bots.length < c.BOTS) {
         let o = new Entity(room.random());
-     //   o.color = 17;
+        //   o.color = 17;
         o.define(Class.bot);
         o.define(Class.elite_destroyer);
         o.name += ran.chooseBotName();
