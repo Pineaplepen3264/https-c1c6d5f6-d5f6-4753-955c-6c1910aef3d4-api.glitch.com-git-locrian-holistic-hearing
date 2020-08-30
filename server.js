@@ -5644,7 +5644,7 @@ var maintainloop = (() => {
                 Class.fallenoverworker,
                Class.SteamrollerDominator,
 
-             Class.DestroyerDominator
+               Class.DestroyerDominator
               ],
               3,
               "a",
