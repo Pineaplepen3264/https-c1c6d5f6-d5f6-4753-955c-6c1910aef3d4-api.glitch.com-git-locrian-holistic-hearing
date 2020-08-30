@@ -5642,7 +5642,9 @@ var maintainloop = (() => {
                 Class.elite_destroyer,
                 Class.gunnerDominator,
                 Class.fallenoverworker,
-                Class.DestroyerDominator
+               Class.SteamrollerDominator,
+
+             Class.DestroyerDominator
               ],
               3,
               "a",
