@@ -935,38 +935,45 @@ class io_fleeAtLowHealth extends IO {
         goal: {
           x: this.body.x - input.target.x,
           y: this.body.y - input.target.y
-     },
-            };
         }
+      };
     }
-
+  }
 }
 class io_sineA extends IO {
-    constructor(b) {
-        super(b);
-        this.phase = 5;
-        this.wo = this.body.master.facing;
-    }
-    think(input) {
-        this.phase += .5;
-        this.body.x += this.phase * Math.cos(this.wo) - 10 * Math.cos(this.phase) * Math.sin(this.wo);
-        this.body.y += this.phase * Math.sin(this.wo) + 10 * Math.cos(this.phase) * Math.cos(this.wo);
-        return {
-            power: 1
-        };
-    }
+  constructor(b) {
+    super(b);
+    this.phase = 5;
+    this.wo = this.body.master.facing;
+  }
+  think(input) {
+    this.phase += 0.5;
+    this.body.x +=
+      this.phase * Math.cos(this.wo) -
+      10 * Math.cos(this.phase) * Math.sin(this.wo);
+    this.body.y +=
+      this.phase * Math.sin(this.wo) +
+      10 * Math.cos(this.phase) * Math.cos(this.wo);
+    return {
+      power: 1
+    };
+  }
 }
 class io_sineB extends IO {
-    constructor(b) {
-        super(b);
-        this.phase = 5;
-        this.wo = this.body.master.facing;
-    }
-    think(input) {
-        this.phase += .5;
-        this.body.x += this.phase * Math.cos(this.wo) + 10 * Math.cos(this.phase) * Math.sin(this.wo);
-        this.body.y += this.phase * Math.sin(this.wo) - 10 * Math.cos(this.phase) * Math.cos(this.wo);
-    }
+  constructor(b) {
+    super(b);
+    this.phase = 5;
+    this.wo = this.body.master.facing;
+  }
+  think(input) {
+    this.phase += 0.5;
+    this.body.x +=
+      this.phase * Math.cos(this.wo) +
+      10 * Math.cos(this.phase) * Math.sin(this.wo);
+    this.body.y +=
+      this.phase * Math.sin(this.wo) -
+      10 * Math.cos(this.phase) * Math.cos(this.wo);
+  }
 }
 
 /***** ENTITIES *****/
@@ -5642,9 +5649,9 @@ var maintainloop = (() => {
                 Class.elite_destroyer,
                 Class.gunnerDominator,
                 Class.fallenoverworker,
-               Class.SteamrollerDominator,
+                Class.SteamrollerDominator,
 
-               Class.DestroyerDominator
+                Class.DestroyerDominator
               ],
               3,
               "a",
