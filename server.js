@@ -5672,7 +5672,7 @@ var maintainloop = (() => {
             sockets.broadcast("oh s*it... DOMS ARE RAİDİNG SERVER!");
             break;
 case 3: 
-                        choice = [[Class.elite_sprayer_rich], 1, 'a', 'nest'];
+                        choice = [[Class.elite_sprayer_rich,Class.rich_gunner,  Class.rich_destroyer, ], 1, 'a', 'nest'];
 sockets.broadcast('im really rich >:)');
                         break;
 case 4: 
