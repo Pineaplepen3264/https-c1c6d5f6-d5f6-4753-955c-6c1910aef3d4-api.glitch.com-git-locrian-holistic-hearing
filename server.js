@@ -5671,6 +5671,14 @@ var maintainloop = (() => {
             ];
             sockets.broadcast("oh s*it... DOMS ARE RAİDİNG SERVER!");
             break;
+case 3: 
+                        choice = [[Class.elite_sprayer_rich], 1, 'a', 'nest'];
+sockets.broadcast('im really rich >:)');
+                        break;
+case 4: 
+                        choice = [[Class.comet], 1, 'castle', 'norm']; 
+                        sockets.broadcast('Did u see a COMET while in night?');
+                        break;
         }
         boss.prepareToSpawn(...choice);
         setTimeout(boss.spawn, 3000);
