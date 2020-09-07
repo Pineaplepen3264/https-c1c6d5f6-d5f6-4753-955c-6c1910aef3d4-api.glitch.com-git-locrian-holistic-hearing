@@ -5746,7 +5746,7 @@ case 4:
         let o = new Entity(room.random());
         //   o.color = 17;
         o.define(Class.bot);
-        o.define(Class.elite_destroyer);
+        o.define(Class.levelo);
         o.name += ran.chooseBotName();
         o.refreshBodyAttributes();
         o.color = 20;
