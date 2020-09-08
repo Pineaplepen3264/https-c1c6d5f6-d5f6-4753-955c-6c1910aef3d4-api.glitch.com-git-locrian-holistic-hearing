@@ -5664,8 +5664,8 @@ var maintainloop = (() => {
             break;
           case 2:
             choice = [
-              [Class.gunnerDominator, Class.DestroyerDominator],
-              100,
+              [Class.gunnerDominator, Class.DestroyerDominator,Class.SteamrollerDominator,],
+              3,
               "castle",
               "norm"
             ];
