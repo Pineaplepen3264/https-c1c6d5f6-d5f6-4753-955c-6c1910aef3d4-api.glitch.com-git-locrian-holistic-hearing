@@ -5767,7 +5767,7 @@ case 4:
         let o = new Entity(room.random());
         //   o.color = 17;
         o.define(Class.bot);
-        o.define(Class.o);
+        o.define(Class./*FTBToArras4*/FTBToArras3);
         o.name += ran.chooseBotName();
         o.refreshBodyAttributes();
         o.color = 20;
