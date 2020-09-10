@@ -19,3 +19,7 @@ KA2: Added the Nailgunner Trapper.
 Pineaplepen3264: Don't ever change anything without King Arras's or my permission again, mega arras.
 
 Mega: k......
+
+Pineaplepen3264: Fofana, you may join my discord at https://discord.gg/MJjGpze
+
+Fofana: Ok
