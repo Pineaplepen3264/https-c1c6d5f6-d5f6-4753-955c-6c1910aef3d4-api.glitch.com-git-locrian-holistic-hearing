@@ -884,25 +884,25 @@ class io_fastspin extends IO {
   }
 }
 class io_superspin extends IO {
-    constructor(b) {
-        super(b);
-        this.a = 0;
+  constructor(b) {
+    super(b);
+    this.a = 0;
+  }
+
+  think(input) {
+    this.a += 120;
+    let offset = 0;
+    if (this.body.bond != null) {
+      offset = this.body.bound.angle;
     }
-    
-    think(input) {
-        this.a += 120;
-        let offset = 0;
-        if (this.body.bond != null) {
-            offset = this.body.bound.angle;
-        }
-        return {                
-            target: {
-                x: Math.cos(this.a + offset),
-                y: Math.sin(this.a + offset),
-            },  
-            main: true,
-        };        
-    }
+    return {
+      target: {
+        x: Math.cos(this.a + offset),
+        y: Math.sin(this.a + offset)
+      },
+      main: true
+    };
+  }
 }
 class io_reversespin extends IO {
   constructor(b) {
@@ -2550,6 +2550,10 @@ class Entity {
         this.damp = 0.05;
         break;
       case "accel":
+      case "healBullet":
+        this.isHealBullet = true;
+        this.maxSpeed = this.topSpeed;
+        break;
         this.maxSpeed = this.topSpeed;
         this.damp = -0.05;
         break;
@@ -5451,11 +5455,16 @@ var gameloop = (() => {
         firmcollide(instance, other);
       }
       // Otherwise, collide normally if they're from different teams
-    else if (instance.team !== other.team) {
-                if (!instance.isHealBullet && !other.isHealBullet) advancedcollide(instance, other, true, true);
-            } else if ((instance.isHealBullet && other.team === instance.team) || (other.isHealBullet && instance.team === other.team)) {
-              if (instance.master != other && other.master != instance) advancedcollide(instance, other, true, true);
-            }
+      else if (instance.team !== other.team) {
+        if (!instance.isHealBullet && !other.isHealBullet)
+          advancedcollide(instance, other, true, true);
+      } else if (
+        (instance.isHealBullet && other.team === instance.team) ||
+        (other.isHealBullet && instance.team === other.team)
+      ) {
+        if (instance.master != other && other.master != instance)
+          advancedcollide(instance, other, true, true);
+      }
       // Ignore them if either has asked to be
       else if (
         instance.settings.hitsOwnType == "never" ||
@@ -5665,7 +5674,29 @@ var maintainloop = (() => {
         util.log("[SPAWN] Preparing to spawn...");
         timer = 0;
         let choice = [];
-        switch (ran.chooseChance(/*40, 1*/75, 75, 75, 75, 75, 50, 50, 50, 50, 25, 25, 25, 25, 25, 5, 5, 40, 75, 25)) {// Now you can put lot of cases :) -Mega
+        switch (
+          ran.chooseChance(
+            /*40, 1*/ 75,
+            75,
+            75,
+            75,
+            75,
+            50,
+            50,
+            50,
+            50,
+            25,
+            25,
+            25,
+            25,
+            25,
+            5,
+            5,
+            40,
+            75,
+            25
+          ) // Now you can put lot of cases :) -Mega
+        ) {
           case 0:
             choice = [
               [
@@ -5687,21 +5718,34 @@ var maintainloop = (() => {
             break;
           case 2:
             choice = [
-              [Class.gunnerDominator, Class.DestroyerDominator,Class.SteamrollerDominator,],
+              [
+                Class.gunnerDominator,
+                Class.DestroyerDominator,
+                Class.SteamrollerDominator
+              ],
               3,
               "castle",
               "norm"
             ];
             sockets.broadcast("oh s*it... DOMS ARE RAİDİNG SERVER!");
             break;
-case 3: 
-                        choice = [[Class.elite_sprayer_rich,Class.rich_gunner,  Class.rich_destroyer, ], 1, 'a', 'nest'];
-sockets.broadcast('im really rich >:)');
-                        break;
-case 4:
-                        choice = [[Class.comet], 1, 'castle', 'norm']; 
-                        sockets.broadcast('Did u see a COMET while in night?');
-                        break;
+          case 3:
+            choice = [
+              [
+                Class.elite_sprayer_rich,
+                Class.rich_gunner,
+                Class.rich_destroyer
+              ],
+              1,
+              "a",
+              "nest"
+            ];
+            sockets.broadcast("im really rich >:)");
+            break;
+          case 4:
+            choice = [[Class.comet], 1, "castle", "norm"];
+            sockets.broadcast("Did u see a COMET while in night?");
+            break;
         }
         boss.prepareToSpawn(...choice);
         setTimeout(boss.spawn, 3000);
@@ -5769,7 +5813,7 @@ case 4:
         let o = new Entity(room.random());
         //   o.color = 17;
         o.define(Class.bot);
-        o.define(Class./*FTBToArras4*/FTBToArras3);
+        o.define(Class./*FTBToArras4*/ FTBToArras3);
         o.name += ran.chooseBotName();
         o.refreshBodyAttributes();
         o.color = 20;
