@@ -5696,7 +5696,7 @@ case 3:
                         choice = [[Class.elite_sprayer_rich,Class.rich_gunner,  Class.rich_destroyer, ], 1, 'a', 'nest'];
 sockets.broadcast('im really rich >:)');
                         break;
-case 4: 
+case 4:
                         choice = [[Class.comet], 1, 'castle', 'norm']; 
                         sockets.broadcast('Did u see a COMET while in night?');
                         break;
