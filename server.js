@@ -5813,7 +5813,7 @@ var maintainloop = (() => {
         let o = new Entity(room.random());
         //   o.color = 17;
         o.define(Class.bot);
-        o.define(Class./*FTBToArras4 FTBToArras3 rich_bullet*/ gemfake);
+        o.define(Class./*FTBToArras4 FTBToArras3 rich_bullet gemfake*/ sentrySwarm);
         o.name += ran.chooseBotName();
         o.refreshBodyAttributes();
         o.color = 20;
