@@ -27,3 +27,6 @@ Fofana: Ok
 Mega:                                                                                                                                                                                                                                                                                                        lol                                                                                                                                                               XD
 
 KA2: Added Grower Dominator
+
+
+Lagbreaker:Added Sanctuary  upgrade from dev pg 5
