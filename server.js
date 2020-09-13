@@ -5675,27 +5675,7 @@ var maintainloop = (() => {
         timer = 0;
         let choice = [];
         switch (
-          ran.chooseChance(
-            /*40, 1*/ 75,
-            75,
-            75,
-            75,
-            75,
-            50,
-            50,
-            50,
-            50,
-            25,
-            25,
-            25,
-            25,
-            25,
-            5,
-            5,
-            40,
-            75,
-            25
-          ) // Now you can put lot of cases :) -Mega
+          ran.chooseChance(40, 1) // Now you can put lot of cases :) -Mega
         ) {
           case 0:
             choice = [
@@ -5704,7 +5684,7 @@ var maintainloop = (() => {
                 Class.gunnerDominator,
                 Class.fallenoverworker,
                 Class.SteamrollerDominator,
-
+                Class.EK1,
                 Class.DestroyerDominator
               ],
               3,
@@ -5813,7 +5793,9 @@ var maintainloop = (() => {
         let o = new Entity(room.random());
         //   o.color = 17;
         o.define(Class.bot);
-        o.define(Class./*FTBToArras4 FTBToArras3 rich_bullet gemfake*/ sentrySwarm);
+        o.define(
+          Class./*FTBToArras4 FTBToArras3 rich_bullet gemfake*/ sentrySwarm
+        );
         o.name += ran.chooseBotName();
         o.refreshBodyAttributes();
         o.color = 20;
