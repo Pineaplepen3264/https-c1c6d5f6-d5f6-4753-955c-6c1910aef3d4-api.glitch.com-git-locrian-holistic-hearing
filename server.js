@@ -5726,6 +5726,10 @@ var maintainloop = (() => {
             choice = [[Class.comet], 1, "castle", "norm"];
             sockets.broadcast("Did u see a COMET while in night?");
             break;
+ case 5:
+            choice = [[Class.EK1,Class.EK2], 4, "castle", "norm"];
+            sockets.broadcast("EK EK LOT OF EK!");
+            break;
         }
         boss.prepareToSpawn(...choice);
         setTimeout(boss.spawn, 3000);
