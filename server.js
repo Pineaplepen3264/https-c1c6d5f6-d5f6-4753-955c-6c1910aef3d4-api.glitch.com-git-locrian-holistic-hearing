@@ -5759,7 +5759,7 @@ var maintainloop = (() => {
     // Make base protectors if needed.
     let f = (loc, team) => {
       let o = new Entity(loc);
-      o.define(Class./*overseer*/trapperDominator);
+      o.define(Class./*overseertrapperDominator*/bedn);
       o.team = -team;
       o.color = [10, 11, 12, 15][team - 1];
     };
