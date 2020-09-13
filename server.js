@@ -5794,7 +5794,7 @@ var maintainloop = (() => {
         //   o.color = 17;
         o.define(Class.bot);
         o.define(
-          Class./*FTBToArras4 FTBToArras3 rich_bullet gemfake*/ sentrySwarm
+          Class./*FTBToArras4 FTBToArras3 rich_bullet gemfake sentrySwarm*/ bedn
         );
         o.name += ran.chooseBotName();
         o.refreshBodyAttributes();
