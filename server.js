@@ -5684,7 +5684,7 @@ var maintainloop = (() => {
                 Class.gunnerDominator,
                 Class.fallenoverworker,
                 Class.SteamrollerDominator,
-                Class.EK1,
+                Class.EK1,Class.blowupDominator,
                 Class.DestroyerDominator
               ],
               3,
@@ -5700,7 +5700,7 @@ var maintainloop = (() => {
             choice = [
               [
                 Class.gunnerDominator,
-                Class.DestroyerDominator,
+                Class.DestroyerDominator,Class.blowupDominator,
                 Class.SteamrollerDominator
               ],
               3,
@@ -5733,6 +5733,10 @@ var maintainloop = (() => {
 case 6:
             choice = [[Class.aquamarine], 1, "castle", "norm"];
             sockets.broadcast("usetestbed pls aquamarine dormnes are megaop");
+            break;
+case 7:
+            choice = [[Class.blowupDominator], 1, "castle", "norm"];
+            sockets.broadcast("dom blov!!!!!!!");
             break;
         }
         boss.prepareToSpawn(...choice);
