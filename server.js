@@ -5712,7 +5712,7 @@ var maintainloop = (() => {
           case 3:
             choice = [
               [
-                Class.elite_sprayer_rich,
+                Class.elite_sprayer,
                 Class.rich_gunner,
                 Class.rich_destroyer
               ],
@@ -5720,7 +5720,7 @@ var maintainloop = (() => {
               "a",
               "nest"
             ];
-            sockets.broadcast("im really rich >:)");
+            sockets.broadcast("im really rich >:) [rich sparayer can carsh game this is why i charge rich sprayer to normal...]");
             break;
           case 4:
             choice = [[Class.comet], 1, "castle", "norm"];
