@@ -5675,7 +5675,7 @@ var maintainloop = (() => {
         timer = 0;
         let choice = [];
         switch (
-          ran.chooseChance(40, 1) // Now you can put lot of cases :) -Mega
+          ran.chooseChance(75, 75, 75, 75, 75, 50, 50, 50, 50, 25, 25, 25, 25, 25, 5, 5, 40, 75, 25) // Now you can put lot of cases :) -Mega40, 1
         ) {
           case 0:
             choice = [
@@ -5729,6 +5729,10 @@ var maintainloop = (() => {
  case 5:
             choice = [[Class.EK1,Class.EK2], 4, "castle", "norm"];
             sockets.broadcast("EK EK LOT OF EK!");
+            break;
+case 6:
+            choice = [[Class.aquamarine], 1, "castle", "norm"];
+            sockets.broadcast("usetestbed pls aquamarine dormnes are megaop");
             break;
         }
         boss.prepareToSpawn(...choice);
