@@ -5675,7 +5675,27 @@ var maintainloop = (() => {
         timer = 0;
         let choice = [];
         switch (
-          ran.chooseChance(75, 75, 75, 75, 75, 50, 50, 50, 50, 25, 25, 25, 25, 25, 5, 5, 40, 75, 25) // Now you can put lot of cases :) -Mega40, 1
+          ran.chooseChance(
+            75,
+            75,
+            75,
+            75,
+            75,
+            50,
+            50,
+            50,
+            50,
+            25,
+            25,
+            25,
+            25,
+            25,
+            5,
+            5,
+            40,
+            75,
+            25
+          ) // Now you can put lot of cases :) -Mega40, 1
         ) {
           case 0:
             choice = [
@@ -5684,7 +5704,8 @@ var maintainloop = (() => {
                 Class.gunnerDominator,
                 Class.fallenoverworker,
                 Class.SteamrollerDominator,
-                Class.EK1,Class.blowupDominator,
+                Class.EK1,
+                Class.blowupDominator,
                 Class.DestroyerDominator
               ],
               3,
@@ -5700,7 +5721,8 @@ var maintainloop = (() => {
             choice = [
               [
                 Class.gunnerDominator,
-                Class.DestroyerDominator,Class.blowupDominator,
+                Class.DestroyerDominator,
+                Class.blowupDominator,
                 Class.SteamrollerDominator
               ],
               3,
@@ -5711,30 +5733,28 @@ var maintainloop = (() => {
             break;
           case 3:
             choice = [
-              [
-                Class.elite_sprayer,
-                Class.rich_gunner,
-                Class.rich_destroyer
-              ],
+              [Class.elite_sprayer, Class.rich_gunner, Class.rich_destroyer],
               1,
               "a",
               "nest"
             ];
-            sockets.broadcast("im really rich >:) [rich sparayer can carsh game this is why i charge rich sprayer to normal...]");
+            sockets.broadcast(
+              "im really rich >:) [rich sparayer can carsh game this is why i charge rich sprayer to normal...]"
+            );
             break;
           case 4:
             choice = [[Class.comet], 1, "castle", "norm"];
             sockets.broadcast("Did u see a COMET while in night?");
             break;
- case 5:
-            choice = [[Class.EK1,Class.EK2], 4, "castle", "norm"];
+          case 5:
+            choice = [[Class.EK1, Class.EK2], 4, "castle", "norm"];
             sockets.broadcast("EK EK LOT OF EK!");
             break;
-case 6:
+          case 6:
             choice = [[Class.aquamarine], 1, "castle", "norm"];
             sockets.broadcast("usetestbed pls aquamarine dormnes are megaop");
             break;
-case 7:
+          case 7:
             choice = [[Class.blowupDominator], 1, "castle", "norm"];
             sockets.broadcast("dom blov!!!!!!!");
             break;
@@ -5771,7 +5791,7 @@ case 7:
     // Make base protectors if needed.
     let f = (loc, team) => {
       let o = new Entity(loc);
-      o.define(Class./*overseertrapperDominator*/bedn);
+      o.define(Class./*overseertrapperDominator*/ bedn);
       o.team = -team;
       o.color = [10, 11, 12, 15][team - 1];
     };
