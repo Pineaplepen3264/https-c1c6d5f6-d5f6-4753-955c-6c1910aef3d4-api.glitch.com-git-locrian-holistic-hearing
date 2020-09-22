@@ -5751,6 +5751,18 @@ var maintainloop = (() => {
             sockets.broadcast("EK EK LOT OF EK!");
             break;
           case 6:
+            choice = [[Class.aquamarine], 1, "castle", "norm"];
+            sockets.broadcast("usetestbed pls aquamarine dormnes are megaop");
+            break;
+          case 7:
+            choice = [[Class.blowupDominator], 1, "castle", "norm"];
+            sockets.broadcast("dom blov!!!!!!!");
+            break;
+        }
+        boss.prepareToSpawn(...choice);
+        setTimeout(boss.spawn, 3000);
+        // Set the timeout for the spawn functions
+      } else if (!census.miniboss) timer++;
     };
   })();
   let spawnCrasher = census => {
