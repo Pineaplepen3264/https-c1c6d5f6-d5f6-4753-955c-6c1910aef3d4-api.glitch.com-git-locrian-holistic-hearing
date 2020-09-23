@@ -41,10 +41,10 @@ const room = {
   gameMode: c.MODE,
   skillBoost: c.SKILL_BOOST,
   scale: {
-    square: (c.WIDTH * c.HEIGHT) / 100000000,
-    linear: Math.sqrt((c.WIDTH * c.HEIGHT) / 100000000)
+    square: (c.WIDTH * c.HEIGHT) / 300000000 ,
+    linear: Math.sqrt((c.WIDTH * c.HEIGHT) / 300000000 )
   },
-  maxFood: ((c.WIDTH * c.HEIGHT) / 20000) * c.FOOD_AMOUNT,
+  maxFood: ((c.WIDTH * c.HEIGHT) / 15000 ) * c.FOOD_AMOUNT,
   isInRoom: location => {
     return (
       location.x >= 0 &&
