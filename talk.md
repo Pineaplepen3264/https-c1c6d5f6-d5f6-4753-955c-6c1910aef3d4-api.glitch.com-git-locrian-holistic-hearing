@@ -24,9 +24,10 @@ Pineaplepen3264: Fofana, you may join my discord at https://discord.gg/MJjGpze
 
 Fofana: Ok
 
-Mega:                                                                                                                                                                                                                                                                                                        lol                                                                                                                                                               XD
+Mega: lol XD
 
 KA2: Added Grower Dominator
 
+Lagbreaker:Added Sanctuary upgrade from dev pg 5
 
-Lagbreaker:Added Sanctuary  upgrade from dev pg 5
+Lag:Sometimes I will remove the testbed toggle token (temporary) because I wanted to test testbed branches(And I can't access the client)so i do so
