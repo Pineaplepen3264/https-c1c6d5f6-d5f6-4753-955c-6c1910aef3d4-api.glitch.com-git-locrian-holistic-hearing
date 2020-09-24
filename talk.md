@@ -32,4 +32,4 @@ Lagbreaker:Added Sanctuary upgrade from dev pg 5
 
 Lag:Sometimes I will remove the testbed toggle token (temporary) because I wanted to test testbed branches(And I can't access the client)so i do so
 
-KA2: Added one more barrel below the first one.
+KA2: Added one more barrel on Crockett below the first one.
