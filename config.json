@@ -29,7 +29,7 @@
   ],
   "X_GRID": 9,
   "Y_GRID": 9,
-  "DAMAGE_CONSTANT": 0.6,
+  "DAMAGE_CONSTANT": 100,37,
   "KNOCKBACK_CONSTANT": 1,
   "ROOM_BOUND_FORCE": 0.01,
   "FOOD": [0, 0.75, 0.22, 0.1, 0.005, 0, 0],
@@ -48,6 +48,6 @@
   "MIN_SPEED": 0.001,
   "FOOD_AMOUNT": 0.4,
   "SKILL_BOOST": 5,
-  "BOTS": 5,
+  "BOTS": 10,
   "GLASS_HEALTH_FACTOR": 2
 }
