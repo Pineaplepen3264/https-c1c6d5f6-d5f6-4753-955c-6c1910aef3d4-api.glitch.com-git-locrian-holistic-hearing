@@ -15,7 +15,7 @@ const c = require("./config.json");
 const util = require("./lib/util");
 const ran = require("./lib/random");
 const hshg = require("./lib/hshg");
-
+const tilesize = c.WIDTH / c.X_GRID;
 // Let's get a cheaper array removal thing
 Array.prototype.remove = index => {
   if (index === this.length - 1) {
@@ -44,7 +44,7 @@ const room = {
     square: (c.WIDTH * c.HEIGHT) / 5000000000,
     linear: Math.sqrt((c.WIDTH * c.HEIGHT) / 5000000000)
   },
-  maxFood: ((c.WIDTH * c.HEIGHT) / 999999) * c.FOOD_AMOUNT,
+  maxFood: ((c.WIDTH * c.HEIGHT) / 99999999) * c.FOOD_AMOUNT,
   isInRoom: location => {
     return (
       location.x >= 0 &&
@@ -79,6 +79,11 @@ room.findType("bas1");
 room.findType("bas2");
 room.findType("bas3");
 room.findType("bas4");
+room.findType("dom0");
+room.findType("dom1");
+room.findType("dom2");
+room.findType("dom3");
+room.findType("dom4");
 room.findType("roid");
 room.findType("rock");
 room.nestFoodAmount =
@@ -533,8 +538,8 @@ class io_nearestDifferentMaster extends IO {
               if (e.master.master.team !== -101) {
                 if (
                   e.type === "tank" ||
-                      e.type === "dominator" ||
-                    e.type === "miniboss" ||
+                  e.type === "dominator" ||
+                  e.type === "miniboss" ||
                   e.type === "crasher" ||
                   (!this.body.aiSettings.shapefriend && e.type === "food")
                 ) {
@@ -2454,7 +2459,7 @@ class Entity {
         0 +
         tur * 0x01 +
         this.settings.drawHealth * 0x02 +
-          (this.type === "tank" || this.type === "dominator") * 0x04,
+        (this.type === "tank" || this.type === "dominator") * 0x04,
       id: this.id,
       index: this.index,
       x: this.x,
@@ -2473,7 +2478,7 @@ class Entity {
         this.facingType === "autospin" ||
         (this.facingType === "locksFacing" && this.control.alt),
       layer:
-         this.bond != null
+        this.bond != null
           ? this.bound.layer
           : this.type === "wall"
           ? 11
@@ -2986,7 +2991,6 @@ class Entity {
     }
     return 0;
   }
-
 
   protect() {
     entitiesToAvoid.push(this);
@@ -4129,7 +4133,7 @@ const sockets = (() => {
             case "tdm":
               {
                 // Count how many others there are
-                let census = [1, 1, 1, 1],
+                let census = [1, 1],
                   scoreCensus = [1, 1, 1, 1];
                 players.forEach(p => {
                   census[p.team - 1]++;
@@ -4829,6 +4833,7 @@ const sockets = (() => {
             if (
               (my.type === "wall" && my.alpha > 0.2) ||
               my.type === "miniboss" ||
+              my.type === "dominator" ||
               (my.type === "tank" && my.lifetime)
             )
               all.push({
@@ -5760,10 +5765,7 @@ var maintainloop = (() => {
                 Class.elite_destroyer,
                 Class.gunnerDominator,
                 Class.fallenoverworker,
-                Class.SteamrollerDominator,
-                Class.EK1,
-                Class.blowupDominator,
-                Class.DestroyerDominator
+                Class.EK1
               ],
               3,
               "a",
@@ -5774,7 +5776,7 @@ var maintainloop = (() => {
             choice = [[Class.palisade], 1, "castle", "norm"];
             sockets.broadcast("A weird rumbling...");
             break;
-          case 2:
+          /* case 2:
             choice = [
               [
                 Class.gunnerDominator,
@@ -5787,7 +5789,7 @@ var maintainloop = (() => {
               "norm"
             ];
             sockets.broadcast("oh s*it... DOMS ARE RAİDİNG SERVER!");
-            break;
+            break;*/
           case 3:
             choice = [
               [Class.elite_sprayer, Class.rich_gunner, Class.rich_destroyer],
@@ -5811,10 +5813,10 @@ var maintainloop = (() => {
             choice = [[Class.aquamarine], 1, "castle", "norm"];
             sockets.broadcast("usetestbed pls aquamarine dormnes are megaop");
             break;
-          case 7:
+          /*case 7:
             choice = [[Class.blowupDominator], 1, "castle", "norm"];
             sockets.broadcast("dom blov!!!!!!!");
-            break;
+            break;*/
         }
         boss.prepareToSpawn(...choice);
         setTimeout(boss.spawn, 3000);
@@ -5845,10 +5847,10 @@ var maintainloop = (() => {
   };
   // The NPC function
   let makenpcs = (() => {
-    // Make base protectors if needed.
+    /*  // Make base protectors if needed.
     let f = (loc, team) => {
       let o = new Entity(loc);
-      o.define(Class./*overseertrapperDominatorbedn*/ modeSanctuary2);
+      o.define(Class.baseProtector);
       o.team = -team;
       o.color = [10, 11, 12, 15][team - 1];
     };
@@ -5856,7 +5858,30 @@ var maintainloop = (() => {
       room["bas" + i].forEach(loc => {
         f(loc, i);
       });
+    }*/
+    let f = (loc, team) => {
+      let o = new Entity(loc);
+      let e = ran.choose([Class.modeSanctuary]);
+      o.define(e);
+      o.team = -team;
+      o.color = [10, 11, 12, 15][team - 1];
+    };
+    for (let i = 1; i < 5; i++) {
+      room["dom" + i].forEach(loc => {
+        f(loc, i);
+      });
     }
+    //Uncaptured dominators
+    f = loc => {
+      let o = new Entity(loc);
+      let e = ran.choose([Class.modeSanctuary]);
+      o.define(e);
+      o.team = -100;
+      o.color = 3;
+    };
+    room["dom0"].forEach(loc => {
+      f(loc);
+    });
     // Return the spawning function
     let bots = [];
     return () => {
