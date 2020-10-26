@@ -218,9 +218,9 @@
     [
       "norm",
       "norm",
+      "bas2",
       "norm",
       "norm",
-      "bas3",
       "norm",
       "norm",
       "norm",
@@ -230,9 +230,9 @@
       "norm",
       "norm",
       "norm",
-      "bas3",
       "norm",
       "norm",
+      "bas2",
       "norm",
       "norm",
       "norm"
@@ -479,6 +479,6 @@
   "MIN_SPEED": 0.001,
   "FOOD_AMOUNT": 0.000001,
   "SKILL_BOOST": 5,
-  "BOTS": 10,
+  "BOTS": 0,
   "GLASS_HEALTH_FACTOR": 10
 }
