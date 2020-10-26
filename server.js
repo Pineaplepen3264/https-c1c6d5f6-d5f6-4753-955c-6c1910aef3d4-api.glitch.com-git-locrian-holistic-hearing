@@ -79,6 +79,11 @@ room.findType("bas1");
 room.findType("bas2");
 room.findType("bas3");
 room.findType("bas4");
+room.findType("dom0");
+room.findType("dom1");
+room.findType("dom2");
+room.findType("dom3");
+room.findType("dom4");
 room.findType("roid");
 room.findType("rock");
 room.nestFoodAmount =
@@ -533,6 +538,7 @@ class io_nearestDifferentMaster extends IO {
               if (e.master.master.team !== -101) {
                 if (
                   e.type === "tank" ||
+                    e.type === "dominator" ||
                   e.type === "crasher" ||
                   (!this.body.aiSettings.shapefriend && e.type === "food")
                 ) {
@@ -2452,7 +2458,7 @@ class Entity {
         0 +
         tur * 0x01 +
         this.settings.drawHealth * 0x02 +
-        (this.type === "tank") * 0x04,
+          (this.type === "tank" || this.type === "dominator") * 0x04,
       id: this.id,
       index: this.index,
       x: this.x,
@@ -2471,13 +2477,15 @@ class Entity {
         this.facingType === "autospin" ||
         (this.facingType === "locksFacing" && this.control.alt),
       layer:
-        this.bond != null
+       this.bond != null
           ? this.bound.layer
           : this.type === "wall"
           ? 11
           : this.type === "food"
           ? 10
           : this.type === "tank"
+          ? 5
+          : this.type === "dominator"
           ? 5
           : this.type === "crasher"
           ? 1
@@ -2907,7 +2915,7 @@ class Entity {
       if (killText === "You have been killed")
         killText = "You have died a stupid death";
       this.sendMessage(killText + ".");
-      // If I'm the leader, broadcast it:
+       // If I'm the leader, broadcast it:
       if (this.id === room.topPlayerID) {
         let usurptText = this.name === "" ? "The leader" : this.name;
         if (notJustFood) {
@@ -2925,12 +2933,63 @@ class Entity {
         }
         sockets.broadcast(usurptText);
       }
-      // Kill it
-      return 1;
+      if (this.type === "dominator") {
+        this.captured = false;
+        killTools.forEach(instance => {
+          if (this.captured) {
+            return 0;
+          }
+          let captured = this.team != -100;
+          this.captured = true;
+          if (captured) {
+            this.team = -100;
+          } else {
+            this.team = instance.team;
+          }
+          let colors = [10, 11, 12, 15];
+          //util.log(this.team);
+          /*if (this.team < 0) {
+              this.color = colors[(this.team+1) * -1];
+              }*/
+          if (!captured) {
+            this.color = instance.color;
+          } else {
+            this.color = 13;
+          }
+          this.health.amount = this.health.max;
+          let teams = [1, 2, 3, 4];
+          let loc = new Vector(this.x, this.y);
+          if (this.name != "Mothership") {
+            if (captured) {
+              room.set("dom0", loc);
+            } else {
+              room.set("dom" + instance.team * -1, loc);
+            }
+          }
+        });
+        return 0;
+      } else if (this.button) {
+        this.health.amount = this.health.max;
+        if (this.buttoncooldown > 0) {
+          return 0;
+        }
+        this.buttoncooldown = 25;
+        entities.forEach(e => {
+          if (e.door) {
+            // open or close all nearby doors
+            if (util.getDistance(e, this) < tilesize * 2) {
+              e.open = !e.open;
+            }
+          }
+        });
+        return 0;
+      } else {
+        // Kill it
+        return 1;
+      }
     }
     return 0;
   }
-
   protect() {
     entitiesToAvoid.push(this);
     this.isProtected = true;
@@ -4072,7 +4131,7 @@ const sockets = (() => {
             case "tdm":
               {
                 // Count how many others there are
-                let census = [1, 1, 1, 1],
+                let census = [1, 1],
                   scoreCensus = [1, 1, 1, 1];
                 players.forEach(p => {
                   census[p.team - 1]++;
@@ -4771,6 +4830,7 @@ const sockets = (() => {
           for (let my of entities)
             if (
               (my.type === "wall" && my.alpha > 0.2) ||
+                 my.type === "dominator" ||
               my.type === "miniboss" ||
               (my.type === "tank" && my.lifetime)
             )
@@ -5786,12 +5846,12 @@ var maintainloop = (() => {
       o.team = -100;
     }
   };
-  // The NPC function
+ // The NPC function
   let makenpcs = (() => {
     // Make base protectors if needed.
     let f = (loc, team) => {
       let o = new Entity(loc);
-      o.define(Class./*overseertrapperDominatorbedn*/ modeSanctuary2);
+      o.define(Class.baseProtector);
       o.team = -team;
       o.color = [10, 11, 12, 15][team - 1];
     };
@@ -5800,25 +5860,30 @@ var maintainloop = (() => {
         f(loc, i);
       });
     }
-    // Return the spawning function
-    let bots = [];
-    return () => {
-      let census = {
-        crasher: 0,
-        miniboss: 0,
-        tank: 0
-      };
-      let npcs = entities
-        .map(function npcCensus(instance) {
-          if (census[instance.type] != null) {
-            census[instance.type]++;
-            return instance;
-          }
-        })
-        .filter(e => {
-          return e;
-        });
-      // Spawning
+    f = (loc, team) => {
+      let o = new Entity(loc);
+      let e = ran.choose([Class.Steamrollerdom]);
+      o.define(e);
+      o.team = -team;
+      o.color = [10, 11, 12, 15][team - 1];
+    };
+    for (let i = 1; i < 5; i++) {
+      room["dom" + i].forEach(loc => {
+        f(loc, i);
+      });
+    }
+    //Uncaptured dominators
+    f = loc => {
+      let o = new Entity(loc);
+      let e = ran.choose([Class.Steamrollerdom]);
+      o.define(e);
+      o.team = -100;
+      o.color = 3;
+    };
+    room["dom0"].forEach(loc => {
+      f(loc);
+    });
+   /*   // Spawning
       spawnCrasher(census);
       spawnBosses(census);
       if (bots.length < c.BOTS) {
@@ -5827,7 +5892,7 @@ var maintainloop = (() => {
         o.define(Class.bot);
         o.define(
           Class./*FTBToArras4 FTBToArras3 rich_bullet gemfake sentrySwarm*/ bedn
-        );
+       /* );
         o.name += ran.chooseBotName();
         o.refreshBodyAttributes();
         o.color = 20;
@@ -5845,7 +5910,7 @@ var maintainloop = (() => {
         }
       });
     };
-  })();
+  })();*/
   // The big food function
   let makefood = (() => {
     let food = [],
