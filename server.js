@@ -533,6 +533,8 @@ class io_nearestDifferentMaster extends IO {
               if (e.master.master.team !== -101) {
                 if (
                   e.type === "tank" ||
+                      e.type === "dominator" ||
+                    e.type === "miniboss" ||
                   e.type === "crasher" ||
                   (!this.body.aiSettings.shapefriend && e.type === "food")
                 ) {
@@ -2452,7 +2454,7 @@ class Entity {
         0 +
         tur * 0x01 +
         this.settings.drawHealth * 0x02 +
-        (this.type === "tank") * 0x04,
+          (this.type === "tank" || this.type === "dominator") * 0x04,
       id: this.id,
       index: this.index,
       x: this.x,
@@ -2471,13 +2473,15 @@ class Entity {
         this.facingType === "autospin" ||
         (this.facingType === "locksFacing" && this.control.alt),
       layer:
-        this.bond != null
+         this.bond != null
           ? this.bound.layer
           : this.type === "wall"
           ? 11
           : this.type === "food"
           ? 10
           : this.type === "tank"
+          ? 5
+          : this.type === "dominator"
           ? 5
           : this.type === "crasher"
           ? 1
@@ -2925,11 +2929,64 @@ class Entity {
         }
         sockets.broadcast(usurptText);
       }
-      // Kill it
-      return 1;
+      if (this.type === "dominator") {
+        this.captured = false;
+        killTools.forEach(instance => {
+          if (this.captured) {
+            return 0;
+          }
+          let captured = this.team != -100;
+          this.captured = true;
+          if (captured) {
+            this.team = -100;
+          } else {
+            this.team = instance.team;
+          }
+          let colors = [10, 11, 12, 15];
+          //util.log(this.team);
+          /*if (this.team < 0) {
+              this.color = colors[(this.team+1) * -1];
+              }*/
+          if (!captured) {
+            this.color = instance.color;
+          } else {
+            this.color = 13;
+          }
+          this.health.amount = this.health.max;
+          let teams = [1, 2, 3, 4];
+          let loc = new Vector(this.x, this.y);
+          if (this.name != "Mothership") {
+            if (captured) {
+              room.set("dom0", loc);
+            } else {
+              room.set("dom" + instance.team * -1, loc);
+            }
+          }
+        });
+        return 0;
+      } else if (this.button) {
+        this.health.amount = this.health.max;
+        if (this.buttoncooldown > 0) {
+          return 0;
+        }
+        this.buttoncooldown = 25;
+        entities.forEach(e => {
+          if (e.door) {
+            // open or close all nearby doors
+            if (util.getDistance(e, this) < tilesize * 2) {
+              e.open = !e.open;
+            }
+          }
+        });
+        return 0;
+      } else {
+        // Kill it
+        return 1;
+      }
     }
     return 0;
   }
+
 
   protect() {
     entitiesToAvoid.push(this);
