@@ -41,10 +41,10 @@ const room = {
   gameMode: c.MODE,
   skillBoost: c.SKILL_BOOST,
   scale: {
-    square: (c.WIDTH * c.HEIGHT) / 5000000000 ,
-    linear: Math.sqrt((c.WIDTH * c.HEIGHT) / 5000000000 )
+    square: (c.WIDTH * c.HEIGHT) / 5000000000,
+    linear: Math.sqrt((c.WIDTH * c.HEIGHT) / 5000000000)
   },
-  maxFood: ((c.WIDTH * c.HEIGHT) / 999999 ) * c.FOOD_AMOUNT,
+  maxFood: ((c.WIDTH * c.HEIGHT) / 999999) * c.FOOD_AMOUNT,
   isInRoom: location => {
     return (
       location.x >= 0 &&
@@ -5791,7 +5791,7 @@ var maintainloop = (() => {
     // Make base protectors if needed.
     let f = (loc, team) => {
       let o = new Entity(loc);
-      o.define(Class./*overseertrapperDominatorbedn*/modeSanctuary2 );
+      o.define(Class./*overseertrapperDominatorbedn*/ modeSanctuary2);
       o.team = -team;
       o.color = [10, 11, 12, 15][team - 1];
     };
@@ -5800,7 +5800,7 @@ var maintainloop = (() => {
         f(loc, i);
       });
     }
-     for (let i = 1; i < 5; i++) {
+    for (let i = 1; i < 5; i++) {
       room["bas" + i].forEach(loc => {
         f(loc, i);
       });
