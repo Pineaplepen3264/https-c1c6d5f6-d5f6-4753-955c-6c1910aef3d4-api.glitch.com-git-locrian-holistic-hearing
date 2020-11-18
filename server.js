@@ -2836,7 +2836,7 @@ class Entity {
       let jackpot = Math.ceil(
         util.getJackpot(this.skill.score) / this.collisionArray.length
       );
-      // Now for each of the things that kill me...
+
       this.collisionArray.forEach(instance => {
         if (instance.type === "wall") return 0;
         if (instance.master.settings.acceptsScore) {
@@ -4279,7 +4279,7 @@ const sockets = (() => {
             gundata.push(lastShot.time, lastShot.power);
           });
           output.push(...gundata);
-          // For each turret, add their own output
+
           let turdata = [data.turrets.length];
           data.turrets.forEach(turret => {
             turdata.push(...flatten(turret));
