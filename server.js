@@ -2983,6 +2983,7 @@ class Entity {
     // Remove from the collision grid
     this.removeFromGrid();
     this.isGhost = true;
+    if (this.ondeath) this.ondeath();
   }
 
   isDead() {
@@ -5774,37 +5775,14 @@ var maintainloop = (() => {
           ) // Now you can put lot of cases :) -Mega40, 1
         ) {
           case 0:
-            choice = [
-              [
-                Class.elite_destroyer,
-                Class.gunnerDominator,
-                Class.fallenoverworker,
-                Class.SteamrollerDominator,
-                Class.EK1,
-                Class.blowupDominator,
-                Class.DestroyerDominator
-              ],
-              3,
-              "a",
-              "nest"
-            ];
+            choice = [[Class.EK1], 3, "a", "nest"];
             break;
           case 1:
             choice = [[Class.palisade], 1, "castle", "norm"];
             sockets.broadcast("A weird rumbling...");
             break;
           case 2:
-            choice = [
-              [
-                Class.gunnerDominator,
-                Class.DestroyerDominator,
-                Class.blowupDominator,
-                Class.SteamrollerDominator
-              ],
-              3,
-              "castle",
-              "norm"
-            ];
+            choice = [[Class.EK1], 3, "castle", "norm"];
             sockets.broadcast("oh s*it... DOMS ARE RAİDİNG SERVER!");
             break;
           case 3:
@@ -5829,10 +5807,6 @@ var maintainloop = (() => {
           case 6:
             choice = [[Class.aquamarine], 1, "castle", "norm"];
             sockets.broadcast("usetestbed pls aquamarine dormnes are megaop");
-            break;
-          case 7:
-            choice = [[Class.blowupDominator], 1, "castle", "norm"];
-            sockets.broadcast("dom blov!!!!!!!");
             break;
         }
         boss.prepareToSpawn(...choice);
