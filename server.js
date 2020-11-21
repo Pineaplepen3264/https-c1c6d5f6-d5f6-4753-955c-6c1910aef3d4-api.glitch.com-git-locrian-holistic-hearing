@@ -4073,8 +4073,8 @@ const sockets = (() => {
             case "tdm":
               {
                 // Count how many others there are
-                let census = [1, 1, 1, 1],
-                  scoreCensus = [1, 1, 1, 1];
+                let census = [1, 1],
+                  scoreCensus = [1, 1];
                 players.forEach(p => {
                   census[p.team - 1]++;
                   if (p.body != null) {
@@ -4082,7 +4082,7 @@ const sockets = (() => {
                   }
                 });
                 let possiblities = [];
-                for (let i = 0, m = 0; i < 4; i++) {
+                for (let i = 0, m = 0; i < 2; i++) {
                   let v = Math.round(
                     (1000000 * (room["bas" + (i + 1)].length + 1)) /
                       (census[i] + 1) /
