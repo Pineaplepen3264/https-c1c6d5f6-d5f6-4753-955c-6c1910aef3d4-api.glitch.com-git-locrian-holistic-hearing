@@ -12,7 +12,7 @@
   "maxHeartbeatInterval": 300000,
   "verbose": true,
   "WIDTH": 12000,
-  "HEIGHT": 1000,
+  "HEIGHT": 12000,
   "MODE": "tdm",
   "RANDOM_COLORS": false,
   "BANNED_CHARACTER_REGEX": "/[\uFDFD\u200E\u0000]/gi",
