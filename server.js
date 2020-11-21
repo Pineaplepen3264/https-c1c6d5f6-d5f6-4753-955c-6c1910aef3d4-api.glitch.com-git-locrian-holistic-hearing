@@ -5790,9 +5790,9 @@ var maintainloop = (() => {
   // The NPC function
   let makenpcs = (() => {
     // Make base protectors if needed.
-    let f = (loc, team) => {
+    /*  let f = (loc, team) => {
       let o = new Entity(loc);
-      o.define(Class./*overseertrapperDominatorbedn*/ modeSanctuary2);
+      o.define(Class.overseertrapperDominatorbedn modeSanctuary2);
       o.team = -team;
       o.color = [10, 11, 12, 15][team - 1];
     };
@@ -5800,12 +5800,7 @@ var maintainloop = (() => {
       room["bas" + i].forEach(loc => {
         f(loc, i);
       });
-    }
-    for (let i = 1; i < 5; i++) {
-      room["bas" + i].forEach(loc => {
-        f(loc, i);
-      });
-    }
+    }*/
 
     let maz = (loc, team) => {
       let o = new Entity(loc);
