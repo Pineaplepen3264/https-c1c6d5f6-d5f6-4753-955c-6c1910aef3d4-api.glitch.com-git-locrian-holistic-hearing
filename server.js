@@ -5625,7 +5625,7 @@ var maintainloop = (() => {
     o.ondeath = () => {
       createDom2(
         loc,
-        -2,
+        -1,
         ran.choose([
           Class.gunnerDominator,
           Class.destroyerDominator,
@@ -5642,7 +5642,7 @@ var maintainloop = (() => {
     o.ondeath = () => {
       createDom(
         loc,
-        -1,
+        -2,
         ran.choose([
           Class.gunnerDominator,
           Class.destroyerDominator,
