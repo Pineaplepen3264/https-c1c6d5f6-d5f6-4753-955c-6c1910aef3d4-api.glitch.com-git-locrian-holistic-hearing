@@ -5623,15 +5623,7 @@ var maintainloop = (() => {
     o.team = mode || -100;
     o.color = [3, 10, 11, 12, 15][-mode];
     o.ondeath = () => {
-      createDom2(
-        loc,
-        -1,
-        ran.choose([
-          Class.gunnerDominator,
-          Class.destroyerDominator,
-          Class.trapperDominator
-        ])
-      );
+      createDom2(loc, -2, ran.choose([Class.modeSanctuary]));
     };
   };
   let createDom2 = (loc, mode, type) => {
@@ -5640,53 +5632,21 @@ var maintainloop = (() => {
     o.team = mode || -100;
     o.color = [3, 10, 11, 12, 15][-mode];
     o.ondeath = () => {
-      createDom(
-        loc,
-        -2,
-        ran.choose([
-          Class.gunnerDominator,
-          Class.destroyerDominator,
-          Class.trapperDominator
-        ])
-      );
+      createDom(loc, -1, ran.choose([Class.modeSanctuary]));
     };
   };
 
   if (room.gameMode === "tdm")
     room["domi"].forEach(loc => {
-      createDom(
-        loc,
-        -1,
-        ran.choose([
-          Class.gunnerDominator,
-          Class.destroyerDominator,
-          Class.trapperDominator
-        ])
-      );
+      createDom(loc, -1, ran.choose([Class.modeSanctuary]));
     });
   if (room.gameMode === "tdm")
     room["dom1"].forEach(loc => {
-      createDom(
-        loc,
-        -1,
-        ran.choose([
-          Class.gunnerDominator,
-          Class.destroyerDominator,
-          Class.trapperDominator
-        ])
-      );
+      createDom(loc, -1, ran.choose([Class.modeSanctuary]));
     });
   if (room.gameMode === "tdm")
     room["dom2"].forEach(loc => {
-      createDom(
-        loc,
-        -2,
-        ran.choose([
-          Class.gunnerDominator,
-          Class.destroyerDominator,
-          Class.trapperDominator
-        ])
-      );
+      createDom(loc, -2, ran.choose([Class.modeSanctuary]));
     });
   placeRoids();
   // Spawning functions
