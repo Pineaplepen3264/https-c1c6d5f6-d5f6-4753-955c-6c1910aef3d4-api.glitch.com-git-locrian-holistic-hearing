@@ -79,10 +79,6 @@ room.findType("bas1");
 room.findType("bas2");
 room.findType("bas3");
 room.findType("bas4");
-room.findType("mai1");
-room.findType("mai2");
-room.findType("mai3");
-room.findType("mai4");
 room.findType("roid");
 room.findType("bmaz");
 room.findType("rock");
@@ -2994,6 +2990,7 @@ class Entity {
     return this.health.amount <= 0;
   }
 }
+
 /*** SERVER SETUP ***/
 // Make a speed monitor
 var logs = (() => {
@@ -5626,7 +5623,15 @@ var maintainloop = (() => {
     o.team = mode || -100;
     o.color = [3, 10, 11, 12, 15][-mode];
     o.ondeath = () => {
-      createDom2(loc, -2, ran.choose([Class.modeSanctuary]));
+      createDom2(
+        loc,
+        -1,
+        ran.choose([
+          Class.gunnerDominator,
+          Class.destroyerDominator,
+          Class.trapperDominator
+        ])
+      );
     };
   };
   let createDom2 = (loc, mode, type) => {
@@ -5635,21 +5640,53 @@ var maintainloop = (() => {
     o.team = mode || -100;
     o.color = [3, 10, 11, 12, 15][-mode];
     o.ondeath = () => {
-      createDom(loc, -1, ran.choose([Class.modeSanctuary]));
+      createDom(
+        loc,
+        -2,
+        ran.choose([
+          Class.gunnerDominator,
+          Class.destroyerDominator,
+          Class.trapperDominator
+        ])
+      );
     };
   };
 
   if (room.gameMode === "tdm")
     room["domi"].forEach(loc => {
-      createDom(loc, -1, ran.choose([Class.modeSanctuary]));
+      createDom(
+        loc,
+        -1,
+        ran.choose([
+          Class.gunnerDominator,
+          Class.destroyerDominator,
+          Class.trapperDominator
+        ])
+      );
     });
   if (room.gameMode === "tdm")
     room["dom1"].forEach(loc => {
-      createDom(loc, -1, ran.choose([Class.modeSanctuary]));
+      createDom(
+        loc,
+        -1,
+        ran.choose([
+          Class.gunnerDominator,
+          Class.destroyerDominator,
+          Class.trapperDominator
+        ])
+      );
     });
   if (room.gameMode === "tdm")
     room["dom2"].forEach(loc => {
-      createDom(loc, -2, ran.choose([Class.modeSanctuary]));
+      createDom(
+        loc,
+        -2,
+        ran.choose([
+          Class.gunnerDominator,
+          Class.destroyerDominator,
+          Class.trapperDominator
+        ])
+      );
     });
   placeRoids();
   // Spawning functions
@@ -5799,19 +5836,6 @@ var maintainloop = (() => {
       o.team = -100;
     }
   };
-   let teamWon = team => {
-    setTimeout(() => sockets.broadcast(team + " HAS WON THE GAME!"), 1e3);
-    setTimeout(() => closemode(), 5e3);
-  };
-
-  let createMom = (loc, team) => {
-    let o = new Entity(loc);
-    o.define(Class.mainbase);
-    o.team = -team;
-    o.color = [10, 11, 12, 15][team - 1];
-    o.ondeath = () => {
-      teamWon(["GREEN", "BLUE"][team - 1]);
-    };
   // The NPC function
   let makenpcs = (() => {
     // Make base protectors if needed.
@@ -5835,11 +5859,6 @@ var maintainloop = (() => {
     for (let i = 1; i < 5; i++) {
       room["bmaz"].forEach(loc => {
         maz(loc, i);
-      });
-    }
-     for (let i = 1; i < 5; i++) {
-      room["mai" + i].forEach(loc => {
-        createMom(loc, i);
       });
     }
     // Return the spawning function
