@@ -2990,7 +2990,176 @@ class Entity {
     return this.health.amount <= 0;
   }
 }
+function closeArena() {
+  ArenaClosed();
+}
 
+var loops = 0;
+function ArenaClosed() {
+  loops++;
+  if (loops < 31) {
+    setTimeout(ArenaClosed, 2000);
+  } else {
+    sockets.broadcast("Closing!");
+
+    process.exit();
+    global.restart;
+  }
+}
+
+let spawnarenacloser = (loc, mode, type) => {
+  let o = new Entity(loc);
+  o.define(type);
+  o.team = mode || -6;
+  o.color = [3][-mode];
+};
+
+function threeHourRestart() {
+  restart3hour();
+}
+var loops = 0;
+function restart3hour() {
+  loops++;
+  if (loops < 3600000) {
+    setTimeout(restart3hour, 1000);
+  } else {
+    sockets.broadcast("ARENA CLOSED: NO PLAYERS MAY JOIN!");
+    ArenaClosed();
+    if (room.gameMode === "tdm")
+      room["bas1"].forEach(loc => {
+        spawnarenacloser(
+          loc,
+          -0,
+          ran.choose(
+            [
+              Class.arenacloser,
+               Class.arenacloser,
+               Class.arenacloser,
+            ],
+            1
+          )
+        );
+      });
+    if (room.gameMode === "tdm")
+      room["bas1"].forEach(loc => {
+        spawnarenacloser(
+          loc,
+          -0,
+          ran.choose(
+            [
+              Class.arenacloser,
+               Class.arenacloser,
+               Class.arenacloser,
+            ],
+            1
+          )
+        );
+      });
+    if (room.gameMode === "tdm")
+      room["bas1"].forEach(loc => {
+        spawnarenacloser(
+          loc,
+          -0,
+          ran.choose(
+            [
+              Class.arenacloser,
+               Class.arenacloser,
+               Class.arenacloser,
+            ],
+            1
+          )
+        );
+      });
+    if (room.gameMode === "tdm")
+      room["bas1"].forEach(loc => {
+        spawnarenacloser(
+          loc,
+          -0,
+          ran.choose(
+            [
+               Class.arenacloser,
+               Class.arenacloser,
+               Class.arenacloser,
+            ],
+            1
+          )
+        );
+      });
+  }
+}
+function modeclose() {
+  closemode();
+}
+var loops = 0;
+function closemode() {
+  loops++;
+  if (loops < 10) {
+    setTimeout(closemode, 1000);
+  } else {
+    sockets.broadcast("ARENA CLOSED: NO PLAYERS MAY JOIN!");
+    ArenaClosed();
+    if (room.gameMode === "tdm")
+      room["bas1"].forEach(loc => {
+        spawnarenacloser(
+          loc,
+          -0,
+          ran.choose(
+            [
+              Class.arenacloser,
+               Class.arenacloser,
+               Class.arenacloser,
+            ],
+            1
+          )
+        );
+      });
+    if (room.gameMode === "tdm")
+      room["bas2"].forEach(loc => {
+        spawnarenacloser(
+          loc,
+          -0,
+          ran.choose(
+            [
+              Class.arenacloser,
+               Class.arenacloser,
+               Class.arenacloser,
+            ],
+            1
+          )
+        );
+      });
+    if (room.gameMode === "tdm")
+      room["bas2"].forEach(loc => {
+        spawnarenacloser(
+          loc,
+          -0,
+          ran.choose(
+            [
+              Class.arenacloser,
+               Class.arenacloser,
+               Class.arenacloser,
+            ],
+            1
+          )
+        );
+      });
+    if (room.gameMode === "tdm")
+      room["bas1"].forEach(loc => {
+        spawnarenacloser(
+          loc,
+          -0,
+          ran.choose(
+            [
+               Class.arenacloser,
+               Class.arenacloser,
+               Class.arenacloser,
+            ],
+            1
+          )
+        );
+      });
+  }
+}
 /*** SERVER SETUP ***/
 // Make a speed monitor
 var logs = (() => {
