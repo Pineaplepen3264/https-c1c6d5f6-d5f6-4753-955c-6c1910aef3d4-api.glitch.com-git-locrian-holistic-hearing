@@ -55,6 +55,13 @@ const room = {
   },
   topPlayerID: -1
 };
+
+var time = 2;
+time--;
+if (time == 0) {
+  sockets.broadcast("BLUE has won the game!");
+}
+
 room.findType = type => {
   let output = [];
   let j = 0;
