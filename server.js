@@ -5656,9 +5656,16 @@ var maintainloop = (() => {
     room["dom2"].forEach(loc => {
       createDom(loc, -2, ran.choose([Class.modeSanctuary]));
     });
-let capture doms = 2
+let capture Dom = 2
   set Timeout(() => {
-    sockets.broadcast
+    sockets.broadcast("2 BLUE Sanctuaries has Sabotaged. Timer will break!");
+  let minutes = 15
+   set Timeout (() => {
+     sockets.broadcast ("team,+Has Won The Game!");
+      process.exit();
+   }, 60000*minutes);
+     
+   }
   }
   
   placeRoids();
