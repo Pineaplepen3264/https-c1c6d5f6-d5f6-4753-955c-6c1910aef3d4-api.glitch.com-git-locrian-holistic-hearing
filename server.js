@@ -56,11 +56,6 @@ const room = {
   topPlayerID: -1
 };
 
-var time = 2;
-time--;
-if (time == 0) {
-  sockets.broadcast("BLUE has won the game!");
-}
 
 room.findType = type => {
   let output = [];
@@ -5661,7 +5656,11 @@ var maintainloop = (() => {
     room["dom2"].forEach(loc => {
       createDom(loc, -2, ran.choose([Class.modeSanctuary]));
     });
-
+let capture doms = 2
+  set Timeout(() => {
+    sockets.broadcast
+  }
+  
   placeRoids();
   // Spawning functions
   let spawnBosses = (() => {
