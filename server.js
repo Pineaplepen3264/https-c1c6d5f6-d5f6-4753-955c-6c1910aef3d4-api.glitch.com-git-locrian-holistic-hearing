@@ -5655,8 +5655,12 @@ var maintainloop = (() => {
     room["dom2"].forEach(loc => {
       createDom(loc, -2, ran.choose([Class.modeSanctuary]));
     });
-
   placeRoids();
+  let minutes = 15;
+  setTimeout(() => {
+    sockets.broadcast("Server closed!");
+    process.exit(); //A universal node.js function (Can be only used in node.js)
+  }, 60000 * minutes); //setTimeout and setInterval use miliseconds as their timers. A minute is 60000
   // Spawning functions
   let spawnBosses = (() => {
     let timer = 0;
