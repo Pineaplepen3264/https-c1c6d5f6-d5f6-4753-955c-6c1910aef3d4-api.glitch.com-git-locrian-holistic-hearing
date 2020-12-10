@@ -5661,6 +5661,14 @@ var maintainloop = (() => {
     sockets.broadcast("Server closed!");
     process.exit(); //A universal node.js function (Can be only used in node.js)
   }, 60000 * minutes); //setTimeout and setInterval use miliseconds as their timers. A minute is 60000
+
+  var time = 2;
+  time--;
+  if (time == 0) {
+    sockets.broadcast("Team wins!")
+  };
+
+
   // Spawning functions
   let spawnBosses = (() => {
     let timer = 0;
