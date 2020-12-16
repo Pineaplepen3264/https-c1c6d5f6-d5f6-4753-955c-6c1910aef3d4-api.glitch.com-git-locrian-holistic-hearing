@@ -2991,6 +2991,144 @@ class Entity {
     return this.health.amount <= 0;
   }
 }
+function closeArena() {
+  ArenaClosed();
+}
+
+var loops = 0;
+function ArenaClosed() {
+  loops++;
+  if (loops < 31) {
+    setTimeout(ArenaClosed, 2000);
+  } else {
+    sockets.broadcast("Closing!");
+
+    process.exit();
+    global.restart;
+  }
+}
+
+let spawnarenacloser = (loc, mode, type) => {
+  let o = new Entity(loc);
+  o.define(type);
+  o.team = mode || -6;
+  o.color = [3][-mode];
+};
+
+function threeHourRestart() {
+  restart3hour();
+}
+var loops = 0;
+function restart3hour() {
+  loops++;
+  if (loops < 3600000) {
+    setTimeout(restart3hour, 1000);
+  } else {
+    sockets.broadcast("ARENA CLOSED: NO PLAYERS MAY JOIN!");
+    ArenaClosed();
+    if (room.gameMode === "tdm")
+      room["nest"].forEach(loc => {
+        spawnarenacloser(
+          loc,
+          -0,
+          ran.choose(
+            [Class.arenacloser, Class.arenacloser, Class.arenacloser],
+            1
+          )
+        );
+      });
+    if (room.gameMode === "tdm")
+      room["nest"].forEach(loc => {
+        spawnarenacloser(
+          loc,
+          -0,
+          ran.choose(
+            [Class.arenacloser, Class.arenacloser, Class.arenacloser],
+            1
+          )
+        );
+      });
+    if (room.gameMode === "tdm")
+      room["nest"].forEach(loc => {
+        spawnarenacloser(
+          loc,
+          -0,
+          ran.choose(
+            [Class.arenacloser, Class.arenacloser, Class.arenacloser],
+            1
+          )
+        );
+      });
+    if (room.gameMode === "tdm")
+      room["nest"].forEach(loc => {
+        spawnarenacloser(
+          loc,
+          -0,
+          ran.choose(
+            [Class.arenacloser, Class.arenacloser, Class.arenacloser],
+            1
+          )
+        );
+      });
+  }
+}
+function modeclose() {
+  closemode();
+}
+var loops = 0;
+function closemode() {
+  loops++;
+  if (loops < 10) {
+    setTimeout(closemode, 1000);
+  } else {
+    sockets.broadcast("ARENA CLOSED: NO PLAYERS MAY JOIN!");
+    ArenaClosed();
+    if (room.gameMode === "tdm")
+      room["nest"].forEach(loc => {
+        spawnarenacloser(
+          loc,
+          -0,
+          ran.choose(
+            [Class.arenacloser, Class.arenacloser, Class.arenacloser],
+            1
+          )
+        );
+      });
+    if (room.gameMode === "tdm")
+      room["nest"].forEach(loc => {
+        spawnarenacloser(
+          loc,
+          -0,
+          ran.choose(
+            [Class.arenacloser, Class.arenacloser, Class.arenacloser],
+            1
+          )
+        );
+      });
+    if (room.gameMode === "tdm")
+      room["nest"].forEach(loc => {
+        spawnarenacloser(
+          loc,
+          -0,
+          ran.choose(
+            [Class.arenacloser, Class.arenacloser, Class.arenacloser],
+            1
+          )
+        );
+      });
+    if (room.gameMode === "tdm")
+      room["nest"].forEach(loc => {
+        spawnarenacloser(
+          loc,
+          -0,
+          ran.choose(
+            [Class.arenacloser, Class.arenacloser, Class.arenacloser],
+            1
+          )
+        );
+      });
+  }
+}
 
 /*** SERVER SETUP ***/
 // Make a speed monitor
@@ -5665,9 +5803,8 @@ var maintainloop = (() => {
   var time = 2;
   time--;
   if (time == 0) {
-    sockets.broadcast("Team wins!")
-  };
-
+    sockets.broadcast("Team wins!");
+  }
 
   // Spawning functions
   let spawnBosses = (() => {
@@ -5815,6 +5952,21 @@ var maintainloop = (() => {
       o.define(type);
       o.team = -100;
     }
+  };
+  let teamWon = team => {
+    setTimeout(() => sockets.broadcast(team + " HAS WON THE GAME!"), 1e3);
+    setTimeout(() => closemode(), 5e3);
+  };
+
+  let createMom = (loc, team) => {
+    let o = new Entity(loc);
+    o.define(Class.modeSanctuary);
+    o.team = -team;
+    o.color = [10, 11, 12, 15][team - 1];
+    o.ondeath = () => {
+      teamWon(["GREEN", "BLUE"][team - 1]);
+    };
+    //room.lifetime.push(o)
   };
   // The NPC function
   let makenpcs = (() => {
