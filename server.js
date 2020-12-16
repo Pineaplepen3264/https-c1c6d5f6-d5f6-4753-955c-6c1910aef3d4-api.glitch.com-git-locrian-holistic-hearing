@@ -86,6 +86,8 @@ room.findType("rock");
 room.findType("domi");
 room.findType("dom1");
 room.findType("dom2");
+room.findType("bad1");
+room.findType("bad2");
 room.nestFoodAmount =
   (1.5 * Math.sqrt(room.nest.length)) / room.xgrid / room.ygrid;
 room.random = () => {
@@ -5991,6 +5993,11 @@ var maintainloop = (() => {
     for (let i = 1; i < 5; i++) {
       room["bmaz"].forEach(loc => {
         maz(loc, i);
+      });
+    }
+    for (let i = 1; i < 5; i++) {
+      room["bad" + i].forEach(loc => {
+        createMom(loc, i);
       });
     }
     // Return the spawning function
