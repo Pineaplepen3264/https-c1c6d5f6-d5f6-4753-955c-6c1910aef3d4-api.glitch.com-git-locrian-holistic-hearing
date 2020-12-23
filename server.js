@@ -4928,6 +4928,7 @@ const sockets = (() => {
             if (
               (my.type === "wall" && my.alpha > 0.2) ||
               my.type === "miniboss" ||
+              my.type === "mainsanc" ||
               (my.type === "tank" && my.lifetime)
             )
               all.push({
