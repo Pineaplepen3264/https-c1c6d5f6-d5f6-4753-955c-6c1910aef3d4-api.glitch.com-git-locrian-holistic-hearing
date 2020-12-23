@@ -1906,74 +1906,86 @@ class HealthType {
 }
 
 class Entity {
-    constructor(position, master = this) {
-        this.masterForShoot = master;
-        this.isGhost = false;
-        this.killCount = { solo: 0, assists: 0, bosses: 0, killers: [], };
-        this.creationTime = (new Date()).getTime();
-        // Inheritance
-        this.poisoned = false
-        this.poison = false
-        this.poisonedBy = -1
-        this.poisonLevel = 0
-        this.poisonToApply = 0
-        this.showpoison = false
-       	this.poisonTimer = 0
-        this.poisonimmune = false
-        this.poisonSpeed = false
-        this.freezeSpeed = false
-        this.frozen = false
-        this.freeze = false
-        this.frozenBy = -1
-        this.freezeLevel = 0
-        this.freezeToApply = 1
-        this.freezeImmune = false
-        this.showfreeze = false
-        this.frozenStatus = true
-        this.frozenStatusEffect = false
-       	this.freezeTimer = 0
-        this.master = master;
-        this.source = this;
-        this.parent = this;
-        this.control = {
-            target: new Vector(0, 0),
-            goal: new Vector(0, 0),
-            main: false,
-            alt: false,
-            fire: false,
-            power: 0,
-        };
+  constructor(position, master = this) {
+    this.masterForShoot = master;
+    this.isGhost = false;
+    this.killCount = { solo: 0, assists: 0, bosses: 0, killers: [] };
+    this.creationTime = new Date().getTime();
+    // Inheritance
+    this.poisoned = false;
+    this.poison = false;
+    this.poisonedBy = -1;
+    this.poisonLevel = 0;
+    this.poisonToApply = 0;
+    this.showpoison = false;
+    this.poisonTimer = 0;
+    this.poisonimmune = false;
+    this.poisonSpeed = false;
+    this.freezeSpeed = false;
+    this.frozen = false;
+    this.freeze = false;
+    this.frozenBy = -1;
+    this.freezeLevel = 0;
+    this.freezeToApply = 1;
+    this.freezeImmune = false;
+    this.showfreeze = false;
+    this.frozenStatus = true;
+    this.frozenStatusEffect = false;
+    this.freezeTimer = 0;
+    this.master = master;
+    this.source = this;
+    this.parent = this;
+    this.control = {
+      target: new Vector(0, 0),
+      goal: new Vector(0, 0),
+      main: false,
+      alt: false,
+      fire: false,
+      power: 0
+    };
+    this.isInGrid = false;
+    this.removeFromGrid = () => {
+      if (this.isInGrid) {
+        grid.removeObject(this);
         this.isInGrid = false;
-        this.removeFromGrid = () => { if (this.isInGrid) { grid.removeObject(this); this.isInGrid = false; } };
-        this.addToGrid = () => { if (!this.isInGrid && this.bond == null) { grid.addObject(this); this.isInGrid = true; } };
-        this.activation = (() => {
-            let active = true;
-            let timer = ran.irandom(15);
-            return {
-                update: () => {
-                    if (this.isDead()) return 0;
-                    // Check if I'm in anybody's view
-                    if (!active) { 
-                        this.removeFromGrid();
-                        // Remove bullets and swarm
-                        if (this.settings.diesAtRange) this.kill();
-                        // Still have limited update cycles but do it much more slowly.
-                        if (!(timer--)) active = true;
-                    } else {
-                        this.addToGrid();
-                        timer = 15;
-                        active = views.some(v => v.check(this, 0.6));
-                    }
-                },
-                check: () => { return active; }
-            };
-        })();
-        this.autoOverride = false;
-        this.controllers = [];
-        this.blend = {
-            color: '#FFFFFF',
-            amount: 0,
-        };
+      }
+    };
+    this.addToGrid = () => {
+      if (!this.isInGrid && this.bond == null) {
+        grid.addObject(this);
+        this.isInGrid = true;
+      }
+    };
+    this.activation = (() => {
+      let active = true;
+      let timer = ran.irandom(15);
+      return {
+        update: () => {
+          if (this.isDead()) return 0;
+          // Check if I'm in anybody's view
+          if (!active) {
+            this.removeFromGrid();
+            // Remove bullets and swarm
+            if (this.settings.diesAtRange) this.kill();
+            // Still have limited update cycles but do it much more slowly.
+            if (!timer--) active = true;
+          } else {
+            this.addToGrid();
+            timer = 15;
+            active = views.some(v => v.check(this, 0.6));
+          }
+        },
+        check: () => {
+          return active;
+        }
+      };
+    })();
+    this.autoOverride = false;
+    this.controllers = [];
+    this.blend = {
+      color: "#FFFFFF",
+      amount: 0
+    };
     // Objects
     this.skill = new Skill();
     this.health = new HealthType(1, "static", 0);
@@ -2184,18 +2196,18 @@ class Entity {
     if (set.DAMAGE_CLASS != null) {
       this.settings.damageClass = set.DAMAGE_CLASS;
     }
-     if (set.POISON != null) {
-          this.poison = set.POISON
-        }
-        if (set.POISONED != null) {
-          this.poisoned = set.POISONED
-        }
-        if (set.POISON_TO_APPLY != null) {
-          this.poisonToApply = set.POISON_TO_APPLY
-        }
-        if (set.SHOWPOISON != null) {
-          this.showpoison = set.SHOWPOISON
-        }
+    if (set.POISON != null) {
+      this.poison = set.POISON;
+    }
+    if (set.POISONED != null) {
+      this.poisoned = set.POISONED;
+    }
+    if (set.POISON_TO_APPLY != null) {
+      this.poisonToApply = set.POISON_TO_APPLY;
+    }
+    if (set.SHOWPOISON != null) {
+      this.showpoison = set.SHOWPOISON;
+    }
     if (set.BUFF_VS_FOOD != null) {
       this.settings.buffVsFood = set.BUFF_VS_FOOD;
     }
@@ -5734,6 +5746,258 @@ var gameloop = (() => {
   //let alphaFactor = (delta > expected) ? expected / delta : 1;
   //roomSpeed = c.gameSpeed * alphaFactor;
   //setTimeout(moveloop, 1000 / roomSpeed / 30 - delta);
+})();
+var poisonLoop = (() => {
+  // Fun stuff, like RAINBOWS :D
+  function poison(my) {
+    entities.forEach(function(element) {
+      if (element.showpoison) {
+        let x = element.size + 10;
+        let y = element.size + 10;
+        Math.random() < 0.5 ? (x *= -1) : x;
+        Math.random() < 0.5 ? (y *= -1) : y;
+        Math.random() < 0.5 ? (x *= Math.random() + 1) : x;
+        Math.random() < 0.5 ? (y *= Math.random() + 1) : y;
+        var o = new Entity({
+          x: element.x + x,
+          y: element.y + y
+        });
+        o.define(Class["poisonEffect"]);
+      }
+      if (element.poisoned && element.type == "tank") {
+        let x = element.size + 10;
+        let y = element.size + 10;
+        Math.random() < 0.5 ? (x *= -1) : x;
+        Math.random() < 0.5 ? (y *= -1) : y;
+        Math.random() < 0.5 ? (x *= Math.random() + 1) : x;
+        Math.random() < 0.5 ? (y *= Math.random() + 1) : y;
+        var o = new Entity({
+          x: element.x + x,
+          y: element.y + y
+        });
+        o.define(Class["poisonEffect"]);
+
+        if (!element.invuln) {
+          element.health.amount -=
+            element.health.max / (55 - element.poisonLevel);
+          element.shield.amount -=
+            element.shield.max / (35 - element.poisonLevel);
+        }
+        if (!element.passive) {
+          element.health.amount -=
+            element.health.max / (55 - element.poisonLevel);
+          element.shield.amount -=
+            element.shield.max / (35 - element.poisonLevel);
+        }
+
+        element.poisonTime -= 1;
+        if (element.poisonTime <= 0) element.poisoned = false;
+
+        if (
+          element.health.amount <= 0 &&
+          element.poisonedBy != undefined &&
+          element.poisonedBy.skill != undefined
+        ) {
+          element.poisonedBy.skill.score += Math.ceil(
+            util.getJackpot(element.poisonedBy.skill.score)
+          );
+          element.poisonedBy.sendMessage(
+            "You killed " + element.name + " with poison."
+          );
+          element.sendMessage(
+            "You have been killed by " +
+              element.poisonedBy.name +
+              " with poison."
+          );
+        }
+      }
+      if (element.poisoned && element.type == "food") {
+        let x = element.size + 10;
+        let y = element.size + 10;
+        Math.random() < 0.5 ? (x *= -1) : x;
+        Math.random() < 0.5 ? (y *= -1) : y;
+        Math.random() < 0.5 ? (x *= Math.random() + 1) : x;
+        Math.random() < 0.5 ? (y *= Math.random() + 1) : y;
+        var o = new Entity({
+          x: element.x + x,
+          y: element.y + y
+        });
+        o.define(Class["poisonEffect"]);
+
+        if (!element.invuln) {
+          element.health.amount -=
+            element.health.max / (55 - element.poisonLevel);
+          element.shield.amount -=
+            element.shield.max / (35 - element.poisonLevel);
+        }
+
+        element.poisonTime -= 1;
+        if (element.poisonTime <= 0) element.poisoned = false;
+
+        if (
+          element.health.amount <= 0 &&
+          element.poisonedBy != undefined &&
+          element.poisonedBy.skill != undefined
+        ) {
+          element.poisonedBy.skill.score += Math.ceil(
+            util.getJackpot(element.poisonedBy.skill.score)
+          );
+          element.poisonedBy.sendMessage(
+            "You killed " + element.name + " with poison."
+          );
+          element.sendMessage(
+            "You have been killed by " +
+              element.poisonedBy.name +
+              " with poison."
+          );
+        }
+      }
+      if (element.poisoned && element.type == "miniboss") {
+        let x = element.size + 10;
+        let y = element.size + 10;
+        Math.random() < 0.5 ? (x *= -1) : x;
+        Math.random() < 0.5 ? (y *= -1) : y;
+        Math.random() < 0.5 ? (x *= Math.random() + 1) : x;
+        Math.random() < 0.5 ? (y *= Math.random() + 1) : y;
+        var o = new Entity({
+          x: element.x + x,
+          y: element.y + y
+        });
+        o.define(Class["poisonEffect"]);
+
+        if (!element.invuln) {
+          element.health.amount -=
+            element.health.max / (55 - element.poisonLevel);
+          element.shield.amount -=
+            element.shield.max / (35 - element.poisonLevel);
+        }
+
+        element.poisonTime -= 1;
+        if (element.poisonTime <= 0) element.poisoned = false;
+
+        if (
+          element.health.amount <= 0 &&
+          element.poisonedBy != undefined &&
+          element.poisonedBy.skill != undefined
+        ) {
+          element.poisonedBy.skill.score += Math.ceil(
+            util.getJackpot(element.poisonedBy.skill.score)
+          );
+          element.poisonedBy.sendMessage(
+            "You killed " + element.name + " with poison."
+          );
+          element.sendMessage(
+            "You have been killed by " +
+              element.poisonedBy.name +
+              " with poison."
+          );
+        }
+      }
+      if (element.poisoned && element.type == "mothership") {
+        let x = element.size + 10;
+        let y = element.size + 10;
+        Math.random() < 0.5 ? (x *= -1) : x;
+        Math.random() < 0.5 ? (y *= -1) : y;
+        Math.random() < 0.5 ? (x *= Math.random() + 1) : x;
+        Math.random() < 0.5 ? (y *= Math.random() + 1) : y;
+        var o = new Entity({
+          x: element.x + x,
+          y: element.y + y
+        });
+        o.define(Class["poisonEffect"]);
+
+        if (!element.invuln) {
+          element.health.amount -=
+            element.health.max / (55 - element.poisonLevel);
+          element.shield.amount -=
+            element.shield.max / (35 - element.poisonLevel);
+        }
+
+        element.poisonTime -= 1;
+        if (element.poisonTime <= 0) element.poisoned = false;
+
+        if (
+          element.health.amount <= 0 &&
+          element.poisonedBy != undefined &&
+          element.poisonedBy.skill != undefined
+        ) {
+          element.poisonedBy.skill.score += Math.ceil(
+            util.getJackpot(element.poisonedBy.skill.score)
+          );
+          element.poisonedBy.sendMessage(
+            "You killed " + element.name + " with poison."
+          );
+          element.sendMessage(
+            "You have been killed by " +
+              element.poisonedBy.name +
+              " with poison."
+          );
+        }
+      }
+      if (element.poisoned && element.type == "crasher") {
+        let x = element.size + 10;
+        let y = element.size + 10;
+        Math.random() < 0.5 ? (x *= -1) : x;
+        Math.random() < 0.5 ? (y *= -1) : y;
+        Math.random() < 0.5 ? (x *= Math.random() + 1) : x;
+        Math.random() < 0.5 ? (y *= Math.random() + 1) : y;
+        var o = new Entity({
+          x: element.x + x,
+          y: element.y + y
+        });
+        o.define(Class["poisonEffect"]);
+
+        if (!element.invuln) {
+          element.health.amount -=
+            element.health.max / (55 - element.poisonLevel);
+          element.shield.amount -=
+            element.shield.max / (35 - element.poisonLevel);
+        }
+
+        element.poisonTime -= 1;
+        if (element.poisonTime <= 0) element.poisoned = false;
+
+        if (
+          element.health.amount <= 0 &&
+          element.poisonedBy != undefined &&
+          element.poisonedBy.skill != undefined
+        ) {
+          element.poisonedBy.skill.score += Math.ceil(
+            util.getJackpot(element.poisonedBy.skill.score)
+          );
+          element.poisonedBy.sendMessage(
+            "You killed " +
+              element.name +
+              "'s'" +
+              element.label +
+              " with poison."
+          );
+          element.sendMessage(
+            "You have been killed by " +
+              element.poisonedBy.name +
+              " with poison."
+          );
+        }
+      }
+      if (element.poisoned && element.type == "bullet") {
+        let x = element.size + 10;
+        let y = element.size + 10;
+        Math.random() < 0.5 ? (x *= -1) : x;
+        Math.random() < 0.5 ? (y *= -1) : y;
+        Math.random() < 0.5 ? (x *= Math.random() + 1) : x;
+        Math.random() < 0.5 ? (y *= Math.random() + 1) : y;
+        var o = new Entity({
+          x: element.x + x,
+          y: element.y + y
+        });
+        o.define(Class["poisonEffect"]);
+      }
+    });
+  }
+  return () => {
+    // run the poison
+    poison();
+  };
 })();
 // A less important loop. Runs at an actual 5Hz regardless of game speed.
 var maintainloop = (() => {
