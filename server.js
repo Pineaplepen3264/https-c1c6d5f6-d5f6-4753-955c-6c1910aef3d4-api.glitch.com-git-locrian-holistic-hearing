@@ -41,10 +41,10 @@ const room = {
   gameMode: c.MODE,
   skillBoost: c.SKILL_BOOST,
   scale: {
-    square: (c.WIDTH * c.HEIGHT) / 5000000000,
-    linear: Math.sqrt((c.WIDTH * c.HEIGHT) / 5000000000)
+    square: (c.WIDTH * c.HEIGHT) / 75000000000,
+    linear: Math.sqrt((c.WIDTH * c.HEIGHT) / 75000000000)
   },
-  maxFood: ((c.WIDTH * c.HEIGHT) / 999999) * c.FOOD_AMOUNT,
+  maxFood: ((c.WIDTH * c.HEIGHT) / 20400) * c.FOOD_AMOUNT,
   isInRoom: location => {
     return (
       location.x >= 0 &&
@@ -55,7 +55,6 @@ const room = {
   },
   topPlayerID: -1
 };
-
 room.findType = type => {
   let output = [];
   let j = 0;
@@ -81,11 +80,7 @@ room.findType("bas2");
 room.findType("bas3");
 room.findType("bas4");
 room.findType("roid");
-room.findType("bmaz");
 room.findType("rock");
-room.findType("domi");
-room.findType("dom1");
-room.findType("dom2");
 room.findType("bad1");
 room.findType("bad2");
 room.nestFoodAmount =
@@ -2986,149 +2981,10 @@ class Entity {
     // Remove from the collision grid
     this.removeFromGrid();
     this.isGhost = true;
-    if (this.ondeath) this.ondeath();
   }
 
   isDead() {
     return this.health.amount <= 0;
-  }
-}
-function closeArena() {
-  ArenaClosed();
-}
-
-var loops = 0;
-function ArenaClosed() {
-  loops++;
-  if (loops < 31) {
-    setTimeout(ArenaClosed, 2000);
-  } else {
-    sockets.broadcast("Closing!");
-
-    process.exit();
-    global.restart;
-  }
-}
-
-let spawnarenacloser = (loc, mode, type) => {
-  let o = new Entity(loc);
-  o.define(type);
-  o.team = mode || -6;
-  o.color = [3][-mode];
-};
-
-function threeHourRestart() {
-  restart3hour();
-}
-var loops = 0;
-function restart3hour() {
-  loops++;
-  if (loops < 3600000) {
-    setTimeout(restart3hour, 1000);
-  } else {
-    sockets.broadcast("ARENA CLOSED: NO PLAYERS MAY JOIN!");
-    ArenaClosed();
-    if (room.gameMode === "tdm")
-      room["nest"].forEach(loc => {
-        spawnarenacloser(
-          loc,
-          -0,
-          ran.choose(
-            [Class.arenacloser, Class.arenacloser, Class.arenacloser],
-            1
-          )
-        );
-      });
-    if (room.gameMode === "tdm")
-      room["nest"].forEach(loc => {
-        spawnarenacloser(
-          loc,
-          -0,
-          ran.choose(
-            [Class.arenacloser, Class.arenacloser, Class.arenacloser],
-            1
-          )
-        );
-      });
-    if (room.gameMode === "tdm")
-      room["nest"].forEach(loc => {
-        spawnarenacloser(
-          loc,
-          -0,
-          ran.choose(
-            [Class.arenacloser, Class.arenacloser, Class.arenacloser],
-            1
-          )
-        );
-      });
-    if (room.gameMode === "tdm")
-      room["nest"].forEach(loc => {
-        spawnarenacloser(
-          loc,
-          -0,
-          ran.choose(
-            [Class.arenacloser, Class.arenacloser, Class.arenacloser],
-            1
-          )
-        );
-      });
-  }
-}
-function modeclose() {
-  closemode();
-}
-var loops = 0;
-function closemode() {
-  loops++;
-  if (loops < 10) {
-    setTimeout(closemode, 1000);
-  } else {
-    sockets.broadcast("ARENA CLOSED: NO PLAYERS MAY JOIN!");
-    ArenaClosed();
-    if (room.gameMode === "tdm")
-      room["nest"].forEach(loc => {
-        spawnarenacloser(
-          loc,
-          -0,
-          ran.choose(
-            [Class.arenacloser, Class.arenacloser, Class.arenacloser],
-            1
-          )
-        );
-      });
-    if (room.gameMode === "tdm")
-      room["nest"].forEach(loc => {
-        spawnarenacloser(
-          loc,
-          -0,
-          ran.choose(
-            [Class.arenacloser, Class.arenacloser, Class.arenacloser],
-            1
-          )
-        );
-      });
-    if (room.gameMode === "tdm")
-      room["nest"].forEach(loc => {
-        spawnarenacloser(
-          loc,
-          -0,
-          ran.choose(
-            [Class.arenacloser, Class.arenacloser, Class.arenacloser],
-            1
-          )
-        );
-      });
-    if (room.gameMode === "tdm")
-      room["nest"].forEach(loc => {
-        spawnarenacloser(
-          loc,
-          -0,
-          ran.choose(
-            [Class.arenacloser, Class.arenacloser, Class.arenacloser],
-            1
-          )
-        );
-      });
   }
 }
 
@@ -3906,6 +3762,20 @@ const sockets = (() => {
               }
             }
             break;
+          case "TL":
+            {
+              // teleport cheat
+              if (player.body != null) {
+                if (socket.key === process.env.SECRET) {
+                  player.body.x = player.body.x + player.body.control.target.x;
+                  player.body.y = player.body.y + player.body.control.target.y;
+                }
+                let number = m[0];
+              } else {
+                socket.kick("");
+              }
+            }
+            break;
           case "0":
             {
               // testbed cheat
@@ -4218,8 +4088,8 @@ const sockets = (() => {
             case "tdm":
               {
                 // Count how many others there are
-                let census = [1, 1],
-                  scoreCensus = [1, 1];
+                let census = [1],
+                  scoreCensus = [1];
                 players.forEach(p => {
                   census[p.team - 1]++;
                   if (p.body != null) {
@@ -4227,7 +4097,7 @@ const sockets = (() => {
                   }
                 });
                 let possiblities = [];
-                for (let i = 0, m = 0; i < 2; i++) {
+                for (let i = 0, m = 0; i < 4; i++) {
                   let v = Math.round(
                     (1000000 * (room["bas" + (i + 1)].length + 1)) /
                       (census[i] + 1) /
@@ -4918,7 +4788,6 @@ const sockets = (() => {
             if (
               (my.type === "wall" && my.alpha > 0.2) ||
               my.type === "miniboss" ||
-              my.type === "Dominator" ||
               (my.type === "tank" && my.lifetime)
             )
               all.push({
@@ -5758,56 +5627,8 @@ var maintainloop = (() => {
     }
     util.log("Placing " + count + " obstacles!");
   }
-  let createDom = (loc, mode, type) => {
-    let o = new Entity(loc);
-    o.define(type);
-    o.team = mode || -100;
-    o.color = [3, 10, 11, 12, 15][-mode];
-    o.ondeath = () => {
-      createDom2(loc, -2, ran.choose([Class.modeSanctuary]));
-    };
-  };
-  let createDom2 = (loc, mode, type) => {
-    let o = new Entity(loc);
-    o.define(type);
-    o.team = mode || -100;
-    o.color = [3, 10, 11, 12, 15][-mode];
-    o.ondeath = () => {
-      createDom(loc, -1, ran.choose([Class.modeSanctuary]));
-    };
-  };
 
-  /*  if (room.gameMode === "tdm")
-    room["domi"].forEach(loc => {
-      createDom(
-        loc,
-        -1,
-        ran.choose([
-           Class.modeSanctuary,
-        ])
-      );
-    });*/
-  if (room.gameMode === "tdm")
-    room["dom1"].forEach(loc => {
-      createDom(loc, -1, ran.choose([Class.modeSanctuary]));
-    });
-  if (room.gameMode === "tdm")
-    room["dom2"].forEach(loc => {
-      createDom(loc, -2, ran.choose([Class.modeSanctuary]));
-    });
   placeRoids();
-  let minutes = 15;
-  setTimeout(() => {
-    sockets.broadcast("Server closed!");
-    process.exit(); //A universal node.js function (Can be only used in node.js)
-  }, 60000 * minutes); //setTimeout and setInterval use miliseconds as their timers. A minute is 60000
-
-  var time = 2;
-  time--;
-  if (time == 0) {
-    sockets.broadcast("Team wins!");
-  }
-
   // Spawning functions
   let spawnBosses = (() => {
     let timer = 0;
@@ -5894,14 +5715,37 @@ var maintainloop = (() => {
           ) // Now you can put lot of cases :) -Mega40, 1
         ) {
           case 0:
-            choice = [[Class.EK1], 3, "a", "nest"];
+            choice = [
+              [
+                Class.elite_destroyer,
+                Class.gunnerDominator,
+                Class.fallenoverworker,
+                Class.SteamrollerDominator,
+                Class.EK1,
+                Class.blowupDominator,
+                Class.DestroyerDominator
+              ],
+              3,
+              "a",
+              "nest"
+            ];
             break;
           case 1:
             choice = [[Class.palisade], 1, "castle", "norm"];
             sockets.broadcast("A weird rumbling...");
             break;
           case 2:
-            choice = [[Class.EK1], 3, "castle", "norm"];
+            choice = [
+              [
+                Class.gunnerDominator,
+                Class.DestroyerDominator,
+                Class.blowupDominator,
+                Class.SteamrollerDominator
+              ],
+              3,
+              "castle",
+              "norm"
+            ];
             sockets.broadcast("oh s*it... DOMS ARE RAİDİNG SERVER!");
             break;
           case 3:
@@ -5926,6 +5770,14 @@ var maintainloop = (() => {
           case 6:
             choice = [[Class.aquamarine], 1, "castle", "norm"];
             sockets.broadcast("usetestbed pls aquamarine dormnes are megaop");
+            break;
+          case 7:
+            choice = [[Class.blowupDominator], 1, "castle", "norm"];
+            sockets.broadcast("dom blov!!!!!!!");
+            break;
+          case 8:
+            choice = [[Class.thedestroyer], 1, "castle", "norm"];
+            sockets.broadcast("You feel vibrations from deep below...");
             break;
         }
         boss.prepareToSpawn(...choice);
@@ -5955,49 +5807,18 @@ var maintainloop = (() => {
       o.team = -100;
     }
   };
-  let teamWon = team => {
-    setTimeout(() => sockets.broadcast(team + " HAS WON THE GAME!"), 1e3);
-    setTimeout(() => closemode(), 5e3);
-  };
-
-  let createMom = (loc, team) => {
-    let o = new Entity(loc);
-    o.define(Class.modeSanctuary);
-    o.team = -team;
-    o.color = [10, 11, 12, 15][team - 1];
-    o.ondeath = () => {
-      teamWon(["GREEN", "BLUE"][team - 1]);
-    };
-    //room.lifetime.push(o)
-  };
   // The NPC function
   let makenpcs = (() => {
     // Make base protectors if needed.
-    /*  let f = (loc, team) => {
+    let f = (loc, team) => {
       let o = new Entity(loc);
-      o.define(Class.overseertrapperDominatorbedn modeSanctuary2);
+      o.define(Class./*overseertrapperDominatorbedn*/ modeSanctuary2);
       o.team = -team;
       o.color = [10, 11, 12, 15][team - 1];
     };
     for (let i = 1; i < 5; i++) {
       room["bas" + i].forEach(loc => {
         f(loc, i);
-      });
-    }*/
-
-    let maz = (loc, team) => {
-      let o = new Entity(loc);
-      o.define(Class.mazewall);
-      o.team = -50;
-    };
-    for (let i = 1; i < 5; i++) {
-      room["bmaz"].forEach(loc => {
-        maz(loc, i);
-      });
-    }
-    for (let i = 1; i < 5; i++) {
-      room["bad" + i].forEach(loc => {
-        createMom(loc, i);
       });
     }
     // Return the spawning function
